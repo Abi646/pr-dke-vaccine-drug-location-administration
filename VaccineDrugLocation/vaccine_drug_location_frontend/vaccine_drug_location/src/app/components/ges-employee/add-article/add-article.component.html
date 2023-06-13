@@ -1,0 +1,24 @@
+<h2 class="edit-title">Add Article</h2>
+
+<form (ngSubmit)="saveArticle()" #articleForm="ngForm" class="form-container">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="article.name" required>
+  </div>
+  <div>
+    <label for="type">Type:</label>
+    <select id="type" name="typ" [(ngModel)]="article.type" required>
+      <option [value]="ArticleType.Vaccine">Vaccine</option>
+      <option [value]="ArticleType.Drug">Drug</option>
+    </select>
+  </div>
+  <div>
+    <label for="minAge">Min Age:</label>
+    <input type="number" id="minAge" name="minAge" [(ngModel)]="article.minAge" required>
+  </div>
+  <div>
+    <label for="maxAge">Max Age:</label>
+    <input type="number" id="maxAge" name="maxAge" [(ngModel)]="article.maxAge" required>
+  </div>
+  <button type="submit" class="submit-button">Add Article</button>
+</form>

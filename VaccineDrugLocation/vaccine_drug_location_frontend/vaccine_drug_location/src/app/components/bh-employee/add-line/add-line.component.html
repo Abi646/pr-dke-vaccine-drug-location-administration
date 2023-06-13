@@ -1,0 +1,17 @@
+<h2 class="add-line-title">Linie hinzufügen</h2>
+
+<form (ngSubmit)="saveLine()" #lineForm="ngForm" class="form-container">
+  <div>
+    <label for="location">Standort:</label>
+    <select id="location" name="location" [(ngModel)]="line.location" required>
+      <option *ngFor="let location of locations" [ngValue]="location">{{ location.name }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="dedicatedArticle">Artikel:</label>
+    <select id="dedicatedArticle" name="dedicatedArticle" [(ngModel)]="line.dedicatedArticle" required>
+      <option *ngFor="let article of articles" [ngValue]="article">{{ article.name }}</option>
+    </select>
+  </div>
+  <button type="submit" class="submit-button">Linie hinzufügen</button>
+</form>

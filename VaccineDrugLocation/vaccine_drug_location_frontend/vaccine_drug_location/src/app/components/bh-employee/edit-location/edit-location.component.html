@@ -1,0 +1,41 @@
+<h2 class="edit-title">Location bearbeiten</h2>
+
+<form (ngSubmit)="saveLocation()" #locationForm="ngForm" class="form-container">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="location.name" required>
+  </div>
+  <div>
+    <label for="district">Bezirk:</label>
+    <input type="text" id="district" name="district" [(ngModel)]="location.district" required>
+  </div>
+  <div>
+    <label for="address">Adresse:</label>
+    <input type="text" id="address" name="address" [(ngModel)]="location.address">
+  </div>
+  <div>
+    <label for="postalCode">Postleitzahl:</label>
+    <input type="text" id="postalCode" name="postalCode" [(ngModel)]="location.postalCode">
+  </div>
+
+  <!-- Bereich für Linien -->
+  <div>
+    <h2>Linien</h2>
+
+    <ul>
+      <li *ngFor="let line of lines">
+        {{line.dedicatedArticle.name}} <!-- Zeigt den Namen des dem Linie zugeordneten Artikels an -->
+        <button (click)="removeLine(line.id)">Linie löschen</button> <!-- Löscht die Linie -->
+      </li>
+    </ul>
+  </div>
+    <div>
+      <label for="articleSelect">Artikel:</label>
+      <select id="articleSelect" [(ngModel)]="selectedArticleId">
+        <option *ngFor="let article of articles" [value]="article.id">{{article.name}}</option>
+      </select>
+      <button (click)="addLine()">Linie hinzufügen</button> <!-- Fügt eine Linie mit dem ausgewählten Artikel hinzu -->
+    </div>
+
+    <button type="submit" class="submit-button">Speichern</button>
+</form>

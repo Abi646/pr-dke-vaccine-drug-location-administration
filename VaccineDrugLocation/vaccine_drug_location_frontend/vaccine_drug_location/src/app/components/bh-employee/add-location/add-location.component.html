@@ -1,0 +1,23 @@
+<h2 class="add-location-title">Standort hinzufügen</h2>
+
+<form (ngSubmit)="saveLocation()" #locationForm="ngForm" class="form-container">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="location.name" required>
+  </div>
+  <div>
+    <label for="address">Adresse:</label>
+    <input type="text" id="address" name="address" [(ngModel)]="location.address" required>
+  </div>
+  <div>
+    <label for="postalCode">Postleitzahl:</label>
+    <input type="text" id="postalCode" name="postalCode" [(ngModel)]="location.postalCode" required>
+  </div>
+  <div>
+    <label for="district">Bezirk:</label>
+    <select id="district" name="district" [(ngModel)]="location.district" required>
+      <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+    </select>
+  </div>
+  <button type="submit" class="submit-button">Standort hinzufügen</button>
+</form>

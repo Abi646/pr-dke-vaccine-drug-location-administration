@@ -1,0 +1,40 @@
+<div *ngIf="role == 'GES'" class="container-ges">
+  <h1 class="title">Vaccine Drug Location Administration</h1>
+
+  <p-toolbar class="custom-toolbar">
+    <div class="p-toolbar-group-start">
+      <p class="toolbar-title">Vaccine Drug Location Administration</p>
+    </div>
+  </p-toolbar>
+
+  <div class="card">
+    <p-menubar [model]="GESItems" class="custom-menubar"></p-menubar>
+  </div>
+</div>
+
+
+<div *ngIf="role == 'BH'" class="container-bh">
+  <p-toolbar class="custom-toolbar">
+    <div class="p-toolbar-group-start">
+      <p class="toolbar-title">BH</p>
+    </div>
+  </p-toolbar>
+
+  <div class="card">
+    <p-menubar [model]="BHItems" class="custom-menubar"></p-menubar>
+  </div>
+</div>
+
+<div *ngIf="role == 'LR'" class="container-lr">
+  <p-toolbar class="custom-toolbar">
+    <div class="p-toolbar-group-start">
+      <p class="toolbar-title">BH</p>
+    </div>
+  </p-toolbar>
+
+  <div class="card">
+    <p-menubar [model]="LRItems" class="custom-menubar"></p-menubar>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

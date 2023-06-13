@@ -1,0 +1,24 @@
+<h2 class="edit-title">Edit Article</h2>
+
+<form (ngSubmit)="saveArticle()" class="edit-form">
+  <div class="form-group">
+    <label for="name" class="form-label">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="article.name" required class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="type" class="form-label">Type:</label>
+    <select id="type" name="type" [(ngModel)]="article.type" required class="form-input">
+      <option [value]="ArticleType.Vaccine">Vaccine</option>
+      <option [value]="ArticleType.Drug">Drug</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="minAge" class="form-label">Min Age:</label>
+    <input type="number" id="minAge" name="minAge" [(ngModel)]="article.minAge" required class="form-input">
+  </div>
+  <div class="form-group">
+    <label for="maxAge" class="form-label">Max Age:</label>
+    <input type="number" id="maxAge" name="maxAge" [(ngModel)]="article.maxAge" required class="form-input">
+  </div>
+  <button type="submit" class="submit-button">Save Changes</button>
+</form>
