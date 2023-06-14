@@ -1,77 +1,75 @@
 package dke.vaccine_location_drug.controller;
 
-import dke.vaccine_location_drug.entity.Inventory;
-import dke.vaccine_location_drug.entity.Location;
-import dke.vaccine_location_drug.service.InventoryService;
-import dke.vaccine_location_drug.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import dke.vaccine_location_drug.entity.Inventory;
+import dke.vaccine_location_drug.service.InventoryService;
 import java.util.List;
 
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
-
     private final InventoryService inventoryService;
-    private final LocationService locationService;
 
     @Autowired
-    public InventoryController(InventoryService inventoryService, LocationService locationService) {
+    public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
-        this.locationService = locationService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Inventory>> getAllInventory() {
-        List<Inventory> inventory = inventoryService.getAllInventory();
-        return new ResponseEntity<>(inventory, HttpStatus.OK);
+    public ResponseEntity<List<Inventory>> getAllInventories() {
+        List<Inventory> inventories = inventoryService.getAllInventories();
+        return ResponseEntity.ok(inventories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Inventory> getInventoryById(@PathVariable int id) {
+    public ResponseEntity<Inventory> getInventoryById(@PathVariable Long id) {
         Inventory inventory = inventoryService.getInventoryById(id);
-        return new ResponseEntity<>(inventory, HttpStatus.OK);
+        if (inventory != null) {
+            return ResponseEntity.ok(inventory);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping("/location/{locationId}")
-    public ResponseEntity<Inventory> createInventoryForLocation(@PathVariable int locationId, @RequestBody Inventory inventory) {
-        Location location = locationService.getLocationById(locationId);
-        if (location == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        inventory.setLocation(location);
-        try {
-            Inventory savedInventory = inventoryService.saveInventory(inventory);
-            return new ResponseEntity<>(savedInventory, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping
+    public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
+        Inventory createdInventory = inventoryService.saveInventory(inventory);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdInventory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable int id, @RequestBody Inventory updatedInventory) {
-        Inventory inventory = inventoryService.getInventoryById(id);
-        if (inventory == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        inventory.setArticle(updatedInventory.getArticle());
-        inventory.setQuantity(updatedInventory.getQuantity());
-        try {
-            Inventory updatedInventoryEntity = inventoryService.saveInventory(inventory);
-            return new ResponseEntity<>(updatedInventoryEntity, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Inventory> updateInventory(@PathVariable Long id, @RequestBody Inventory inventory) {
+        Inventory existingInventory = inventoryService.getInventoryById(id);
+        if (existingInventory != null) {
+            inventory.setId(id);
+            Inventory updatedInventory = inventoryService.saveInventory(inventory);
+            return ResponseEntity.ok(updatedInventory);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteInventory(@PathVariable int id) {
-        inventoryService.deleteInventory(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> deleteInventory(@PathVariable Long id) {
+        Inventory existingInventory = inventoryService.getInventoryById(id);
+        if (existingInventory != null) {
+            inventoryService.deleteInventoryById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/location/{locationId}")
+    public ResponseEntity<Inventory> getInventoryByLocationId(@PathVariable Long locationId) {
+        Inventory inventory = inventoryService.getInventoryByLocationId(locationId);
+        if (inventory != null) {
+            return ResponseEntity.ok(inventory);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -1,44 +1,55 @@
 package dke.vaccine_location_drug.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import dke.vaccine_location_drug.entity.Article;
 import dke.vaccine_location_drug.repository.ArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ArticleService {
+    private final ArticleRepository articleRepository;
 
     @Autowired
-    private ArticleRepository repository;
-
-    public List<Article> getAllArticles() {
-        return repository.findAll();
-    }
-
-    public Article getArticleById(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found with id: " + id));
-    }
-
-    public void deleteArticle(int id) {
-        repository.deleteById(id);
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
     }
 
     public Article saveArticle(Article article) {
-        return repository.save(article);
+        return articleRepository.save(article);
+    }
+
+    public Article getArticleById(Long id) {
+        return articleRepository.findById(id).orElse(null);
+    }
+
+    public Article getArticleByName(String name) {
+        Optional<Article> optionalArticle = articleRepository.findByName(name);
+        return optionalArticle.orElse(null);
+    }
+
+    public List<Article> getAllArticles() {
+        return articleRepository.findAll();
+    }
+
+    public void deleteArticleById(Long id) {
+        articleRepository.deleteById(id);
     }
 
     public Article updateArticle(Article article) {
-        Optional<Article> existingArticle = repository.findById(article.getId());
-        if (existingArticle.isPresent()) {
-            return repository.save(article);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found with id: " + article.getId(), null);
+        Optional<Article> existingArticleOptional = articleRepository.findById(article.getId());
+        if (existingArticleOptional.isPresent()) {
+            Article existingArticle = existingArticleOptional.get();
+            existingArticle.setName(article.getName());
+            existingArticle.setMinAge(article.getMinAge());
+            existingArticle.setMaxAge(article.getMaxAge());
+            existingArticle.setType(article.getType());
+            return articleRepository.save(existingArticle);
         }
+        return null;
     }
 }

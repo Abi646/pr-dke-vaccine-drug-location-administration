@@ -1,41 +1,41 @@
 package dke.vaccine_location_drug.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "line")
 public class Line {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
-    @JsonIgnoreProperties("lines")
-    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dedicated_article_id")
-    @JsonIgnoreProperties("lines")
-    @NotNull
-    private Article dedicatedArticle;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "article_id", nullable = false)
+    private Article article;
+
+    // Standardkonstruktor, Getter und Setter
 
     public Line() {
     }
 
-    public Line(Location location, Article dedicatedArticle) {
+    public Line(Location location, Article article) {
         this.location = location;
-        this.dedicatedArticle = dedicatedArticle;
+        this.article = article;
     }
 
-    public Integer getId() {
+    // Weitere Getter und Setter
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,11 +47,24 @@ public class Line {
         this.location = location;
     }
 
-    public Article getDedicatedArticle() {
-        return dedicatedArticle;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setDedicatedArticle(Article dedicatedArticle) {
-        this.dedicatedArticle = dedicatedArticle;
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public Article getArticleByName(String name) {
+        if (article.getName().equalsIgnoreCase(name)) {
+            return article;
+        }
+        return null;
+    }
+
+    public List<Article> getArticles() {
+        List<Article> articles = new ArrayList<>();
+        articles.add(article);
+        return articles;
     }
 }

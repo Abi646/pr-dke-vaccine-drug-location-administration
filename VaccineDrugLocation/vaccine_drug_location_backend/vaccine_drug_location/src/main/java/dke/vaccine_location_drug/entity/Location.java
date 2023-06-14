@@ -1,56 +1,61 @@
 package dke.vaccine_location_drug.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Table(name = "location")
 @Entity
+@Table(name = "location")
 public class Location {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
-    @NotNull
+    @Column(nullable = false)
     private String address;
 
-    @NotNull
+    @Column(nullable = false)
     private String county;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private LocationType type;
+    @Column(nullable = false)
+    private int duration;
+
+    @Column(nullable = false)
+    private String type;
+
+    @OneToOne(mappedBy = "location", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Inventory inventory;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Line> lines;
+    @JsonIgnore
+    private Set<Line> lines = new HashSet<>();
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("location")
-    private List<Inventory> inventory;
+    // Standardkonstruktor, Getter und Setter
 
     public Location() {
     }
 
-    public Location(String name, String address, String county, LocationType type, List<Line> lines, List<Inventory> inventory) {
+    public Location(String name, String address, String county, int duration, String type) {
         this.name = name;
         this.address = address;
         this.county = county;
+        this.duration = duration;
         this.type = type;
-        this.lines = lines;
-        this.inventory = inventory;
     }
 
-    public Integer getId() {
+    // Weitere Getter und Setter
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -78,27 +83,52 @@ public class Location {
         this.county = county;
     }
 
-    public LocationType getType() {
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public void setType(LocationType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public List<Line> getLines() {
-        return lines;
-    }
-
-    public void setLines(List<Line> lines) {
-        this.lines = lines;
-    }
-
-    public List<Inventory> getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 
-    public void setInventory(List<Inventory> inventory) {
+    public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public Set<Line> getLines() {
+        return lines;
+    }
+
+    public void setLines(Set<Line> lines) {
+        this.lines = lines;
+    }
+
+    public void addLine(Line line) {
+        lines.add(line);
+        line.setLocation(this);
+    }
+    public void removeLine(Line line) {
+        lines.remove(line);
+        line.setLocation(null);
+    }
+    public Line getLineById(Long id) {
+        for (Line line : lines) {
+            if (line.getId().equals(id)) {
+                return line;
+            }
+        }
+        return null;
     }
 }

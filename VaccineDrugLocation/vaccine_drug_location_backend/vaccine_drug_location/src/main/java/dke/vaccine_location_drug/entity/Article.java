@@ -1,54 +1,52 @@
 package dke.vaccine_location_drug.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name = "article")
 @Entity
+@Table(name = "article")
 public class Article {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ArticleType type;
-
-    @NotNull
+    @Column(name = "min_age", nullable = false)
     private int minAge;
 
-    @NotNull
+    @Column(name = "max_age", nullable = false)
     private int maxAge;
 
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("article")
-    private Set<Inventory> inventory = new HashSet<>();
+    @Column(nullable = false)
+    private String type;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Inventory> inventories = new HashSet<>();
+
+    // Standardkonstruktor, Getter und Setter
 
     public Article() {
     }
 
-    public Article(int id, String name, ArticleType type, int minAge, int maxAge) {
-        this.id = id;
+    public Article(String name, int minAge, int maxAge, String type) {
         this.name = name;
-        this.type = type;
         this.minAge = minAge;
         this.maxAge = maxAge;
+        this.type = type;
     }
 
-    public int getId() {
+    // Weitere Getter und Setter
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,14 +56,6 @@ public class Article {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ArticleType getType() {
-        return type;
-    }
-
-    public void setType(ArticleType type) {
-        this.type = type;
     }
 
     public int getMinAge() {
@@ -84,11 +74,32 @@ public class Article {
         this.maxAge = maxAge;
     }
 
-    public Set<Inventory> getInventory() {
-        return inventory;
+    public String getType() {
+        return type;
     }
 
-    public void setInventory(Set<Inventory> inventory) {
-        this.inventory = inventory;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Set<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(Set<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
+    public void addInventory(Inventory inventory) {
+        inventories.add(inventory);
+        inventory.setArticle(this);
+    }
+
+    public void removeInventory(Inventory inventory) {
+        inventories.remove(inventory);
+        inventory.setArticle(null);
+    }
+    public Inventory getInventory() {
+        return inventories.stream().findFirst().orElse(null);
     }
 }

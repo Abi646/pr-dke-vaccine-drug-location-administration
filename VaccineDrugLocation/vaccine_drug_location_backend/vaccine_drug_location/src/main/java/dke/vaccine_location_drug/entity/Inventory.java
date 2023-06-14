@@ -1,54 +1,47 @@
 package dke.vaccine_location_drug.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
-@Table(name = "inventory")
 @Entity
+@Table(name = "inventory")
 public class Inventory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
-    @NotNull
-    private Location location;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    @JsonIgnoreProperties("inventory")
-    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "article_id", nullable = false)
+    @JsonIgnore
     private Article article;
 
-    @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id", nullable = false)
+    @JsonIgnore
+    private Location location;
+
+    @Column(nullable = false)
     private int quantity;
+
+    // Standardkonstruktor, Getter und Setter
 
     public Inventory() {
     }
 
-    public Inventory(Location location, Article article, int quantity) {
-        this.location = location;
+    public Inventory(Article article, Location location, int quantity) {
         this.article = article;
+        this.location = location;
         this.quantity = quantity;
     }
 
-    public Integer getId() {
+    // Weitere Getter und Setter
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
     }
 
     public Article getArticle() {
@@ -57,6 +50,14 @@ public class Inventory {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public int getQuantity() {

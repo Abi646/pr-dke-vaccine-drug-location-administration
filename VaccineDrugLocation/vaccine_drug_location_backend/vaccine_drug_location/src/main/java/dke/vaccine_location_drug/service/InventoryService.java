@@ -1,16 +1,16 @@
 package dke.vaccine_location_drug.service;
 
-import dke.vaccine_location_drug.entity.Inventory;
-import dke.vaccine_location_drug.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import dke.vaccine_location_drug.entity.Inventory;
+import dke.vaccine_location_drug.repository.InventoryRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class InventoryService {
-
     private final InventoryRepository inventoryRepository;
 
     @Autowired
@@ -18,20 +18,23 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public List<Inventory> getAllInventory() {
-        return inventoryRepository.findAll();
-    }
-
-    public Inventory getInventoryById(int id) {
-        return inventoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inventory not found with id: " + id));
-    }
-
     public Inventory saveInventory(Inventory inventory) {
         return inventoryRepository.save(inventory);
     }
 
-    public void deleteInventory(int id) {
+    public Inventory getInventoryById(Long id) {
+        return inventoryRepository.findById(id).orElse(null);
+    }
+
+    public List<Inventory> getAllInventories() {
+        return inventoryRepository.findAll();
+    }
+
+    public void deleteInventoryById(Long id) {
         inventoryRepository.deleteById(id);
+    }
+
+    public Inventory getInventoryByLocationId(Long locationId) {
+        return inventoryRepository.findByLocationId(locationId);
     }
 }

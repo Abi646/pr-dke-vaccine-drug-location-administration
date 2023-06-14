@@ -1,7 +1,10 @@
 package dke.vaccine_location_drug.repository;
 
-import dke.vaccine_location_drug.entity.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import dke.vaccine_location_drug.entity.Inventory;
 
-public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
+@Repository
+public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+    Inventory findByLocationId(Long locationId);
 }
