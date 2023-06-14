@@ -14,9 +14,9 @@
     <input type="text" id="postalCode" name="postalCode" [(ngModel)]="location.postalCode" required>
   </div>
   <div>
-    <label for="district">Bezirk:</label>
-    <select id="district" name="district" [(ngModel)]="location.district" required>
-      <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+    <label for="county">Bezirk:</label>
+    <select id="county" name="county" [(ngModel)]="location.county" required>
+      <option *ngFor="let county of districts" [value]="county">{{ county }}</option>
     </select>
   </div>
   <button type="submit" class="submit-button">Standort hinzufügen</button>

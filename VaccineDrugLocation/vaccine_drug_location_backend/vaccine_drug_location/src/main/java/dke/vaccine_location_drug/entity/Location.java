@@ -1,8 +1,12 @@
 package dke.vaccine_location_drug.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
+@Table(name = "location")
 @Entity
 public class Location {
 
@@ -10,26 +14,34 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String address;
 
+    @NotNull
+    private String county;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
-    private District district;
+    private LocationType type;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Line> lines;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("location")
     private List<Inventory> inventory;
 
     public Location() {
     }
 
-    public Location(String name, String address, District district, List<Line> lines, List<Inventory> inventory) {
+    public Location(String name, String address, String county, LocationType type, List<Line> lines, List<Inventory> inventory) {
         this.name = name;
         this.address = address;
-        this.district = district;
+        this.county = county;
+        this.type = type;
         this.lines = lines;
         this.inventory = inventory;
     }
@@ -58,12 +70,20 @@ public class Location {
         this.address = address;
     }
 
-    public District getDistrict() {
-        return district;
+    public String getCounty() {
+        return county;
     }
 
-    public void setDistrict(District district) {
-        this.district = district;
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public LocationType getType() {
+        return type;
+    }
+
+    public void setType(LocationType type) {
+        this.type = type;
     }
 
     public List<Line> getLines() {

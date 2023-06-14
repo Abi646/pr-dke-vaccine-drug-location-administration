@@ -1,5 +1,6 @@
 package dke.vaccine_location_drug.controller;
 
+import dke.vaccine_location_drug.entity.Article;
 import dke.vaccine_location_drug.entity.Line;
 import dke.vaccine_location_drug.service.LineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/line")
+@RequestMapping("/lines")
 public class LineController {
 
     private final LineService lineService;
@@ -43,4 +44,17 @@ public class LineController {
         lineService.deleteLine(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/{lineId}/articles")
+    public ResponseEntity<Line> assignArticlesToLine(@PathVariable int lineId, @RequestBody List<Article> articles) {
+        Line line = lineService.getLineById(lineId);
+        if (line == null) {
+            return ResponseEntity.notFound().build();
+        }
+        line.setDedicatedArticle((Article) articles);
+        Line updatedLine = lineService.saveLine(line);
+        return ResponseEntity.ok(updatedLine);
+    }
+
+
 }

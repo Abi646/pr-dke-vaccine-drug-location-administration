@@ -1,6 +1,8 @@
 package dke.vaccine_location_drug.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Line {
@@ -11,10 +13,14 @@ public class Line {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
+    @JsonIgnoreProperties("lines")
+    @NotNull
     private Location location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dedicated_article_id")
+    @JsonIgnoreProperties("lines")
+    @NotNull
     private Article dedicatedArticle;
 
     public Line() {

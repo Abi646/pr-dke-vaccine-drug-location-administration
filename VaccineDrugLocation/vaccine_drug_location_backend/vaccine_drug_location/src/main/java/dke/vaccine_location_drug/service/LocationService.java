@@ -23,8 +23,8 @@ public class LocationService {
     }
 
     public Location getLocationById(int id) {
-        return locationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
+        Optional<Location> optionalLocation = locationRepository.findById(id);
+        return optionalLocation.orElse(null);
     }
 
     public Location saveLocation(Location location) {
@@ -33,5 +33,9 @@ public class LocationService {
 
     public void deleteLocation(int id) {
         locationRepository.deleteById(id);
+    }
+
+    public List<Location> getLocationsByCounty(String county) {
+        return locationRepository.findByCounty(county);
     }
 }

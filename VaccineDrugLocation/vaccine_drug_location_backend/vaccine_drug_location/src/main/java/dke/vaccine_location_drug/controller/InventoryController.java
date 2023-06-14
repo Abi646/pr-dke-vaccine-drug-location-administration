@@ -1,7 +1,9 @@
 package dke.vaccine_location_drug.controller;
 
 import dke.vaccine_location_drug.entity.Inventory;
+import dke.vaccine_location_drug.entity.Location;
 import dke.vaccine_location_drug.service.InventoryService;
+import dke.vaccine_location_drug.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,12 @@ import java.util.List;
 public class InventoryController {
 
     private final InventoryService inventoryService;
+    private final LocationService locationService;
 
     @Autowired
-    public InventoryController(InventoryService inventoryService) {
+    public InventoryController(InventoryService inventoryService, LocationService locationService) {
         this.inventoryService = inventoryService;
+        this.locationService = locationService;
     }
 
     @GetMapping
@@ -32,10 +36,20 @@ public class InventoryController {
         return new ResponseEntity<>(inventory, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
-        Inventory savedInventory = inventoryService.saveInventory(inventory);
-        return new ResponseEntity<>(savedInventory, HttpStatus.CREATED);
+    @PostMapping("/location/{locationId}")
+    public ResponseEntity<Inventory> createInventoryForLocation(@PathVariable int locationId, @RequestBody Inventory inventory) {
+        Location location = locationService.getLocationById(locationId);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        inventory.setLocation(location);
+        try {
+            Inventory savedInventory = inventoryService.saveInventory(inventory);
+            return new ResponseEntity<>(savedInventory, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")

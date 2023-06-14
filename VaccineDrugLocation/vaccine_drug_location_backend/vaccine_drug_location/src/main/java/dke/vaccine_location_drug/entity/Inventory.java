@@ -1,5 +1,6 @@
 package dke.vaccine_location_drug.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,10 +14,13 @@ public class Inventory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
+    @NotNull
     private Location location;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
+    @JsonIgnoreProperties("inventory")
+    @NotNull
     private Article article;
 
     @NotNull

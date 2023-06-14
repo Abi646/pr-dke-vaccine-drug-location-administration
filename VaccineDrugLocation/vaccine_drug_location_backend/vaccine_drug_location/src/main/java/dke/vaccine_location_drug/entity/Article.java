@@ -1,7 +1,12 @@
 package dke.vaccine_location_drug.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "article")
 @Entity
@@ -15,6 +20,7 @@ public class Article {
     private String name;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private ArticleType type;
 
     @NotNull
@@ -22,6 +28,10 @@ public class Article {
 
     @NotNull
     private int maxAge;
+
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("article")
+    private Set<Inventory> inventory = new HashSet<>();
 
     public Article() {
     }
@@ -72,5 +82,13 @@ public class Article {
 
     public void setMaxAge(int maxAge) {
         this.maxAge = maxAge;
+    }
+
+    public Set<Inventory> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Set<Inventory> inventory) {
+        this.inventory = inventory;
     }
 }
