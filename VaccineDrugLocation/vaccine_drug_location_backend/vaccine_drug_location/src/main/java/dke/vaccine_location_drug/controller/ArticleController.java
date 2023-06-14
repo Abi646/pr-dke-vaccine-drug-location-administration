@@ -1,5 +1,6 @@
 package dke.vaccine_location_drug.controller;
 
+import dke.vaccine_location_drug.entity.ArticleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import dke.vaccine_location_drug.entity.Article;
 import dke.vaccine_location_drug.service.ArticleService;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/articles")
@@ -19,9 +21,24 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> getAllArticles() {
+    public ResponseEntity<List<ArticleDTO>> getAllArticles() {
         List<Article> articles = articleService.getAllArticles();
-        return ResponseEntity.ok(articles);
+
+        List<ArticleDTO> articleDTOS = articles.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(articleDTOS);
+    }
+
+    private ArticleDTO convertToDto(Article article) {
+        ArticleDTO dto = new ArticleDTO();
+        dto.setId(article.getId());
+        dto.setName(article.getName());
+        dto.setMinAge(article.getMinAge());
+        dto.setMaxAge(article.getMaxAge());
+        dto.setType(article.getType());
+        return dto;
     }
 
     @GetMapping("/{id}")
