@@ -31,9 +31,14 @@ public class LocationService {
         return locationRepository.findById(id).orElse(null);
     }
 
-    public List<Location> getLocationsByCounty(String county) {
+    public List<Location> getAllLocationsByCounty(String county) {
         return locationRepository.findByCounty(county);
     }
+
+    public List<Location> getStockLocationsByCounty(String county) {
+        return locationRepository.findByCounty(county);
+    }
+
 
     public List<Location> getAllLocations() {
         return locationRepository.findAll();

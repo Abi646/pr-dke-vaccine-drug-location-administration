@@ -36,9 +36,15 @@ public class LocationController {
         }
     }
 
-    @GetMapping("/county/{county}")
-    public ResponseEntity<List<Location>> getLocationsByCounty(@PathVariable String county) {
-        List<Location> locations = locationService.getLocationsByCounty(county);
+    @GetMapping("/all/{county}")
+    public ResponseEntity<List<Location>> getAllLocationsByCounty(@PathVariable String county) {
+        List<Location> locations = locationService.getAllLocationsByCounty(county);
+        return ResponseEntity.ok(locations);
+    }
+
+    @GetMapping("/stock/{county}")
+    public ResponseEntity<List<Location>> getStockLocationsByCounty(@PathVariable String county) {
+        List<Location> locations = locationService.getStockLocationsByCounty(county);
         return ResponseEntity.ok(locations);
     }
 
