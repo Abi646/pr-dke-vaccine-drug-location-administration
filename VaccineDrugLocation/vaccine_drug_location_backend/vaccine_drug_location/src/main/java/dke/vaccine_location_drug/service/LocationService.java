@@ -91,4 +91,15 @@ public class LocationService {
         return new ArrayList<>(articles);
     }
 
+    public int getAppointmentDurationByLocationName(String locationName) {
+        Location location = locationRepository.findByName(locationName);
+        if (location == null) {
+            throw new IllegalArgumentException("Location not found");
+        }
+
+        return location.getDuration();
+    }
+
+
+
 }

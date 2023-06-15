@@ -15,6 +15,8 @@ public class Location {
     private String address;
     private String type;
 
+    private int duration;
+
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Line> lines;
@@ -65,8 +67,12 @@ public class Location {
         return lines;
     }
 
-    public void setLines(List<Line> lines) {
-        this.lines = lines;
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     // Weitere Methoden und Annotationen nach Bedarf

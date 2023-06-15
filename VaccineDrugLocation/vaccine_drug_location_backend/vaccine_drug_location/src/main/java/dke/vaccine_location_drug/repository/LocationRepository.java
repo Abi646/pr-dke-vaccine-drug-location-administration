@@ -16,4 +16,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     List<Location> findByCountyIgnoreCase(String county);
 
     List<Location> findByCountyAndLinesQuantityGreaterThan(String county, int i);
+
+    Location findByName(String locationName);
 }

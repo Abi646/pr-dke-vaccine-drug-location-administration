@@ -73,4 +73,12 @@ public class LocationController {
         return ResponseEntity.ok(articles);
     }
 
+    @GetMapping("/{locationName}/duration")
+    public ResponseEntity<Integer> getAppointmentDurationByLocationName(@PathVariable String locationName) {
+        int duration = locationService.getAppointmentDurationByLocationName(locationName);
+        return ResponseEntity.ok(duration);
+    }
+
+
+
 }

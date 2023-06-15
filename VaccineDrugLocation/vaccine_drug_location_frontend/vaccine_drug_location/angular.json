@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/contact-tracing",
+            "outputPath": "dist/vacclocation",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "contact-tracing:build:production"
+              "browserTarget": "vacclocation:build:production"
             },
             "development": {
-              "browserTarget": "contact-tracing:build:development"
+              "browserTarget": "vacclocation:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "contact-tracing:build"
+            "browserTarget": "vacclocation:build"
           }
         },
         "test": {
