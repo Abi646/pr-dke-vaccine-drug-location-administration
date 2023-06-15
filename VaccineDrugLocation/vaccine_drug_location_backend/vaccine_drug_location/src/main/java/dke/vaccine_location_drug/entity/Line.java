@@ -1,50 +1,49 @@
 package dke.vaccine_location_drug.entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "line")
 public class Line {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long line_id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "location_id", nullable = false)
-    private Location location;
+    private int lineNumber;
+    private String type;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "article_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "article_id")
     private Article article;
 
-    // Standardkonstruktor, Getter und Setter
+    private int quantity;
 
-    public Line() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
-    public Line(Location location, Article article) {
-        this.location = location;
-        this.article = article;
-    }
-
-    // Weitere Getter und Setter
+    // Getter und Setter
 
     public Long getId() {
-        return id;
+        return line_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.line_id = id;
     }
 
-    public Location getLocation() {
-        return location;
+    public int getLineNumber() {
+        return lineNumber;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Article getArticle() {
@@ -55,16 +54,21 @@ public class Line {
         this.article = article;
     }
 
-    public Article getArticleByName(String name) {
-        if (article.getName().equalsIgnoreCase(name)) {
-            return article;
-        }
-        return null;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public List<Article> getArticles() {
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        return articles;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    // Weitere Methoden und Annotationen nach Bedarf
 }

@@ -1,6 +1,5 @@
 package dke.vaccine_location_drug.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dke.vaccine_location_drug.entity.Line;
@@ -10,60 +9,86 @@ import dke.vaccine_location_drug.repository.LineRepository;
 import dke.vaccine_location_drug.repository.ArticleRepository;
 import dke.vaccine_location_drug.repository.LocationRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
 public class LineService {
     private final LineRepository lineRepository;
-    private final ArticleRepository articleRepository;
     private final LocationRepository locationRepository;
+    private final ArticleRepository articleRepository;
 
-    @Autowired
-    public LineService(LineRepository lineRepository, ArticleRepository articleRepository, LocationRepository locationRepository) {
+    public LineService(LineRepository lineRepository, LocationRepository locationRepository, ArticleRepository articleRepository) {
         this.lineRepository = lineRepository;
-        this.articleRepository = articleRepository;
         this.locationRepository = locationRepository;
+        this.articleRepository = articleRepository;
     }
 
-    public Line saveLine(Line line) {
+    public Line createLine(Long locationId, Long articleId, int quantity, int lineNumber, String type) {
+        Location location = locationRepository.findById(locationId)
+                .orElseThrow(() -> new IllegalArgumentException("Location not found"));
+
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found"));
+
+        Line line = new Line();
+        line.setLocation(location);
+        line.setArticle(article);
+        line.setQuantity(quantity);
+        line.setLineNumber(lineNumber);
+        line.setType(type);
+
         return lineRepository.save(line);
     }
 
-    public Line getLineById(Long id) {
-        return lineRepository.findById(id).orElse(null);
+    public Line updateLine(Long lineId, int quantity) {
+        Line line = lineRepository.findById(lineId)
+                .orElseThrow(() -> new IllegalArgumentException("Line not found"));
+
+        line.setQuantity(quantity);
+
+        return lineRepository.save(line);
+    }
+
+    public void deleteLine(Long lineId) {
+        lineRepository.deleteById(lineId);
     }
 
     public List<Line> getAllLines() {
         return lineRepository.findAll();
     }
 
-    public void deleteLineById(Long id) {
-        lineRepository.deleteById(id);
+    public List<Line> searchLinesByQuantityGreaterThan(int quantity) {
+        return lineRepository.findByQuantityGreaterThan(quantity);
     }
 
-    public void addArticleToLine(Line line, Article article) {
-        line.setArticle(article);
+    public List<Line> searchLinesByQuantityEqualsZero() {
+        return lineRepository.findByQuantityEquals(0);
+    }
+
+    public List<Line> searchLinesByArticleType(String articleType) {
+        return lineRepository.findByArticleTypeIgnoreCase(articleType);
+    }
+
+    public void decreaseQuantity(Long lineId) {
+        Line line = lineRepository.findById(lineId)
+                .orElseThrow(() -> new IllegalArgumentException("Line not found"));
+        if (line.getQuantity() > 0) {
+            line.setQuantity(line.getQuantity() - 1);
+            lineRepository.save(line);
+        }
+    }
+
+    public void increaseQuantity(Long lineId) {
+        Line line = lineRepository.findById(lineId)
+                .orElseThrow(() -> new IllegalArgumentException("Line not found"));
+        line.setQuantity(line.getQuantity() + 1);
         lineRepository.save(line);
     }
 
-    public Set<Article> getArticlesByLocation(Location location) {
-        Set<Article> articles = new HashSet<>();
-        Set<Line> lines = lineRepository.findByLocation(location);
-        for (Line line : lines) {
-            Article article = line.getArticle();
-            articles.add(article);
-        }
-        return articles;
+    public Line getLineByLocationNameAndLineNumber(String locationName, int lineNumber) {
+        return lineRepository.findByLocationNameAndLineNumber(locationName, lineNumber);
     }
 
-    public Location getLocationById(Long id) {
-        return locationRepository.findById(id).orElse(null);
-    }
 
-    public Article getArticleById(Long id) {
-        return articleRepository.findById(id).orElse(null);
-    }
 }
