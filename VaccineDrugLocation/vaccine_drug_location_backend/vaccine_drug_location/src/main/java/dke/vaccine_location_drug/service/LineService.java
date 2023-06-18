@@ -24,7 +24,7 @@ public class LineService {
         this.articleRepository = articleRepository;
     }
 
-    public Line createLine(Long locationId, Long articleId, int quantity, int lineNumber, String type) {
+    public Line createLine(Long locationId, Long articleId, int quantity, String lineNumber, String type) {
         Location location = locationRepository.findById(locationId)
                 .orElseThrow(() -> new IllegalArgumentException("Location not found"));
 

@@ -7,7 +7,7 @@ public class Line {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long line_id;
 
-    private int lineNumber;
+    private String lineNumber;
     private String type;
 
     @ManyToOne
@@ -30,11 +30,11 @@ public class Line {
         this.line_id = id;
     }
 
-    public int getLineNumber() {
+    public String getLineNumber() {
         return lineNumber;
     }
 
-    public void setLineNumber(int lineNumber) {
+    public void setLineNumber(String lineNumber) {
         this.lineNumber = lineNumber;
     }
 

@@ -12,6 +12,7 @@ public class Article {
     private int minAge;
     private int maxAge;
     private String type;
+    private int stock;
 
     // Getter und Setter
 
@@ -55,5 +56,7 @@ public class Article {
         this.type = type;
     }
 
-    // Weitere Methoden und Annotationen nach Bedarf
+    public int getStock() {return stock; }
+
+    public void setStock(int stock) {this.stock = stock;}
 }
