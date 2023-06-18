@@ -200,20 +200,36 @@ public class VDLApplication {
 		locationRepository.save(location6);
 
 		Line line9 = new Line();
-		line9.setLineNumber(1);
-		line9.setType("drug");
+		line9.setLineNumber(10);
+		line9.setType("vaccine");
 		line9.setArticle(article1);
 		line9.setQuantity(65);
 		line9.setLocation(location5);
 		lineRepository.save(line9);
 
 		Line line10 = new Line();
-		line10.setLineNumber(2);
-		line10.setType("drug");
-		line10.setArticle(article4);
+		line10.setLineNumber(20);
+		line10.setType("vaccine");
+		line10.setArticle(article2);
 		line10.setQuantity(50);
-		line10.setLocation(location6);
+		line10.setLocation(location5);
 		lineRepository.save(line10);
+
+		Line line11 = new Line();
+		line11.setLineNumber(11);
+		line11.setType("drug");
+		line11.setArticle(article5);
+		line11.setQuantity(35);
+		line11.setLocation(location6);
+		lineRepository.save(line11);
+
+		Line line12 = new Line();
+		line12.setLineNumber(22);
+		line12.setType("drug");
+		line12.setArticle(article7);
+		line12.setQuantity(30);
+		line12.setLocation(location6);
+		lineRepository.save(line12);
 
 		System.out.println("Data created successfully.");
 	}
