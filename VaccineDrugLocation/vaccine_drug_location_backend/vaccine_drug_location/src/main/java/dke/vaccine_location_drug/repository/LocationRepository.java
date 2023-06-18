@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    //List<Article> findArticlesByLocationId(@Param("locationId") Long locationId);
-
     List<Location> findByCountyIgnoreCase(String county);
 
     List<Location> findByCountyAndLinesQuantityGreaterThan(String county, int i);

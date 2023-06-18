@@ -86,9 +86,11 @@ public class LocationService {
 
 
 
-    public List<Article> getArticlesByLocation(Long locationId) {
-        Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new IllegalArgumentException("Location not found"));
+    public List<Article> getArticlesByLocation(String locationName) {
+        Location location = locationRepository.findByName(locationName);
+        if (location == null) {
+            throw new IllegalArgumentException("Location not found");
+        }
 
         List<Line> lines = location.getLines();
         Set<Article> articles = new HashSet<>();

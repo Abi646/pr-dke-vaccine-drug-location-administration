@@ -70,11 +70,12 @@ public class LocationController {
         return ResponseEntity.ok(articleNamesAndQuantities);
     }
 
-    @GetMapping("/{locationId}/articles")
-    public ResponseEntity<List<Article>> getArticlesByLocation(@PathVariable Long locationId) {
-        List<Article> articles = locationService.getArticlesByLocation(locationId);
+    @GetMapping("/{locationName}/articles")
+    public ResponseEntity<List<Article>> getArticlesByLocation(@PathVariable String locationName) {
+        List<Article> articles = locationService.getArticlesByLocation(locationName);
         return ResponseEntity.ok(articles);
     }
+
 
     @GetMapping("/{locationName}/duration")
     public ResponseEntity<Integer> getAppointmentDurationByLocationName(@PathVariable String locationName) {
