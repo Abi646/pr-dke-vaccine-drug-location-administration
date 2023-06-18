@@ -51,28 +51,40 @@ public class LocationService {
         return locationRepository.findByCountyIgnoreCase(county);
     }
 
-    public List<Location> searchLocationsWithQuantity(String county) {
-        return locationRepository.findByCountyAndLinesQuantityGreaterThan(county, 0);
+    public List<String> searchLocationsWithQuantity(String county) {
+        List<Location> locations = locationRepository.findByCountyAndLinesQuantityGreaterThan(county, 0);
+        return locations.stream()
+                .map(Location::getName)
+                .collect(Collectors.toList());
     }
 
-    public List<Line> getLinesWithQuantityByLocation(Long locationId) {
-        Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new IllegalArgumentException("Location not found"));
+
+    public List<Integer> getLinesWithQuantityByLocationName(String locationName) {
+        Location location = locationRepository.findByName(locationName);
+        if (location == null) {
+            throw new IllegalArgumentException("Location not found");
+        }
 
         return location.getLines().stream()
                 .filter(line -> line.getQuantity() > 0)
+                .map(Line::getLineNumber)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getArticleNamesByLocationAndLine(Long locationId, Long lineId) {
-        Location location = locationRepository.findById(locationId)
-                .orElseThrow(() -> new IllegalArgumentException("Location not found"));
+
+    public List<String> getArticleNamesAndQuantitiesByLocationAndLineNumber(String locationName, int lineNumber, String articleName) {
+        Location location = locationRepository.findByName(locationName);
+        if (location == null) {
+            throw new IllegalArgumentException("Location not found");
+        }
 
         return location.getLines().stream()
-                .filter(line -> line.getId().equals(lineId))
-                .map(line -> line.getArticle().getName())
+                .filter(line -> line.getLineNumber() == lineNumber && line.getArticle().getName().equalsIgnoreCase(articleName))
+                .map(line -> line.getArticle().getName() + " (" + line.getQuantity() + ")")
                 .collect(Collectors.toList());
     }
+
+
 
     public List<Article> getArticlesByLocation(Long locationId) {
         Location location = locationRepository.findById(locationId)

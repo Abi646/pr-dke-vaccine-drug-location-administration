@@ -51,22 +51,25 @@ public class LocationController {
 
 
     @GetMapping("/stock/{county}")
-    public ResponseEntity<List<Location>> searchLocationsWithQuantity(@PathVariable String county) {
-        List<Location> locations = locationService.searchLocationsWithQuantity(county);
-        return ResponseEntity.ok(locations);
+    public ResponseEntity<List<String>> searchLocationsWithQuantity(@PathVariable String county) {
+        List<String> locationNames = locationService.searchLocationsWithQuantity(county);
+        return ResponseEntity.ok(locationNames);
     }
 
-    @GetMapping("/{locationId}/lines")
-    public ResponseEntity<List<Line>> getLinesWithQuantityByLocation(@PathVariable Long locationId) {
-        List<Line> lines = locationService.getLinesWithQuantityByLocation(locationId);
-        return ResponseEntity.ok(lines);
+
+    @GetMapping("/{locationName}/lines")
+    public ResponseEntity<List<Integer>> getLinesWithQuantityByLocation(@PathVariable String locationName) {
+        List<Integer> lineNumbers = locationService.getLinesWithQuantityByLocationName(locationName);
+        return ResponseEntity.ok(lineNumbers);
     }
 
-    @GetMapping("/{locationId}/line/{lineId}/name")
-    public ResponseEntity<List<String>> getArticleNamesByLocationAndLine(@PathVariable Long locationId, @PathVariable Long lineId) {
-        List<String> articleNames = locationService.getArticleNamesByLocationAndLine(locationId, lineId);
-        return ResponseEntity.ok(articleNames);
+
+    @GetMapping("/{locationName}/line/{lineNumber}/articles/{name}")
+    public ResponseEntity<List<String>> getArticleNamesAndQuantitiesByLocationAndLine(@PathVariable String locationName, @PathVariable int lineNumber, @PathVariable String name) {
+        List<String> articleNamesAndQuantities = locationService.getArticleNamesAndQuantitiesByLocationAndLineNumber(locationName, lineNumber, name);
+        return ResponseEntity.ok(articleNamesAndQuantities);
     }
+
     @GetMapping("/{locationId}/articles")
     public ResponseEntity<List<Article>> getArticlesByLocation(@PathVariable Long locationId) {
         List<Article> articles = locationService.getArticlesByLocation(locationId);
