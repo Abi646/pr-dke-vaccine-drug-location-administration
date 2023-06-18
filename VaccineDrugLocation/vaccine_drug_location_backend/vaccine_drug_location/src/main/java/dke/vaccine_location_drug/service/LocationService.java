@@ -72,38 +72,60 @@ public class LocationService {
     }
 
 
-    public List<String> getArticleNamesAndQuantitiesByLocationAndLineNumber(String locationName, int lineNumber, String articleName) {
+    public int getArticleQuantityByLocationAndLineNumberAndName(String locationName, int lineNumber, String articleName) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
             throw new IllegalArgumentException("Location not found");
         }
 
-        return location.getLines().stream()
-                .filter(line -> line.getLineNumber() == lineNumber && line.getArticle().getName().equalsIgnoreCase(articleName))
-                .map(line -> line.getArticle().getName() + " (" + line.getQuantity() + ")")
-                .collect(Collectors.toList());
+        Line line = location.getLines().stream()
+                .filter(l -> l.getLineNumber() == lineNumber)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Line not found"));
+
+        Article article = line.getArticle();
+        if (article == null || !article.getName().equalsIgnoreCase(articleName)) {
+            throw new IllegalArgumentException("Article not found");
+        }
+
+        return line.getQuantity();
     }
 
 
 
-    public List<Article> getArticlesByLocation(String locationName) {
+
+    public List<String> getArticleNamesByLocationAndLineNumber(String locationName, int lineNumber) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
             throw new IllegalArgumentException("Location not found");
         }
 
         List<Line> lines = location.getLines();
-        Set<Article> articles = new HashSet<>();
+        Line targetLine = null;
 
         for (Line line : lines) {
-            Article article = line.getArticle();
-            if (article != null) {
-                articles.add(article);
+            if (line.getLineNumber() == lineNumber) {
+                targetLine = line;
+                break;
             }
         }
 
-        return new ArrayList<>(articles);
+        if (targetLine == null) {
+            throw new IllegalArgumentException("Line not found");
+        }
+
+        List<String> articleNames = new ArrayList<>();
+
+        for (Line line : lines) {
+            if (line.getLineNumber() == lineNumber && line.getArticle() != null) {
+                articleNames.add(line.getArticle().getName());
+            }
+        }
+
+        return articleNames;
     }
+
+
 
     public int getAppointmentDurationByLocationName(String locationName) {
         Location location = locationRepository.findByName(locationName);

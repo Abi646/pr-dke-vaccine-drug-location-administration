@@ -1,6 +1,9 @@
 package dke.vaccine_location_drug.entity;
 
 import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 public class Line {
     @Id

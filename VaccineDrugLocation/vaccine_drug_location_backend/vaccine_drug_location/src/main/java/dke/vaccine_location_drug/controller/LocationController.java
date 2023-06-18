@@ -65,16 +65,22 @@ public class LocationController {
 
 
     @GetMapping("/{locationName}/line/{lineNumber}/articles/{name}")
-    public ResponseEntity<List<String>> getArticleNamesAndQuantitiesByLocationAndLine(@PathVariable String locationName, @PathVariable int lineNumber, @PathVariable String name) {
-        List<String> articleNamesAndQuantities = locationService.getArticleNamesAndQuantitiesByLocationAndLineNumber(locationName, lineNumber, name);
-        return ResponseEntity.ok(articleNamesAndQuantities);
+    public ResponseEntity<Integer> getArticleQuantityByLocationAndLineNumberAndName(@PathVariable String locationName, @PathVariable int lineNumber, @PathVariable String name) {
+        int articleQuantity = locationService.getArticleQuantityByLocationAndLineNumberAndName(locationName, lineNumber, name);
+        return ResponseEntity.ok(articleQuantity);
     }
 
-    @GetMapping("/{locationName}/articles")
-    public ResponseEntity<List<Article>> getArticlesByLocation(@PathVariable String locationName) {
-        List<Article> articles = locationService.getArticlesByLocation(locationName);
-        return ResponseEntity.ok(articles);
+
+    @GetMapping("/{locationName}/line/{lineNumber}/articles")
+    public ResponseEntity<List<String>> getArticleNamesByLocationAndLineNumber(
+            @PathVariable String locationName,
+            @PathVariable int lineNumber
+    ) {
+        List<String> articleNames = locationService.getArticleNamesByLocationAndLineNumber(locationName, lineNumber);
+        return ResponseEntity.ok(articleNames);
     }
+
+
 
 
     @GetMapping("/{locationName}/duration")
