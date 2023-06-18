@@ -1,0 +1,49 @@
+<h1>Liste aller Standorte</h1>
+
+<div class="col-12 mb-2 lg:col-4 lg:mb-0">
+  <span  class="p-input-icon-right">
+    <input type="text" p-list [(ngModel)]="searchCounty" (ngModelChange)="searchByCounty()" placeholder="Suche nach Bezirk " class="p-inputtext p-component p-element class="
+           pInputText p-component p-element>
+    <i class="pi pi-search"></i>
+</span>
+</div>
+
+<div *ngIf="deletingLocationId" class="blue p-message p-message-info">
+  <span class="p-message-icon pi pi-info-circle"></span>
+  Möchten Sie diesen Artikel wirklich löschen?
+  <button (click)="confirmDeleteLocation()" pButton class="p-button-primary">Ja</button>
+  <button (click)="deletingLocationId = undefined" pButton class="p-button-secondary">Nein</button>
+</div>
+
+<p-table [value]="locations" [paginator]="true" [rows]="10" [responsive]="true" class="locations-table">
+  <ng-template pTemplate="header">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Bezirk</th>
+    <th>Adresse</th>
+    <th>Typ</th>
+    <th>Termindauer</th>
+    <th>Aktionen</th>
+  </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-location>
+  <tr>
+    <td>{{ location.id }}</td>
+    <td>{{ location.name }}</td>
+    <td>{{ location.county }}</td>
+    <td>{{ location.address }}</td>
+    <td>{{ location.type }}</td>
+    <td>{{ location.duration }}</td>
+    <td>
+      <button (click)="editLocation(location)" pButton class="p-button p-button-primary">Bearbeiten</button>
+      <button *ngIf="location.id" (click)="deleteLocation(location.id)" pButton class="p-button p-button-danger">Löschen</button>
+    </td>
+  </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7" class="no-articles-message">Keine Standorte gefunden.</td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -1,0 +1,49 @@
+<div class="surface-card p-2 shadow-2 border-round w-full lg:w-12">
+  <div class="flex align-items-center justify-content-center mb-6">
+    <p-card header="Abteilung Gesundheit" subheader="GES" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
+      <ul>
+        <li>Impfstoffverwaltung</li>
+        <li>Medikamentenverwaltung</li>
+        <li>Bestandsverwaltung</li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <p-button label="Login" (click)="selectRole('CT')" icon="pi pi-check"></p-button>
+      </ng-template>
+    </p-card>
+
+    <p-card header="Bezirkshauptmannschaft MitarbeiterIn" subheader="BH" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
+      <ul>
+        <li>Standortverwaltung</li>
+        <li>Linienverwaltung</li>
+      </ul>
+      <div class="p-fluid grid">
+        <div class="field col-12 md:col-12">
+        <span class="p-float-label p-input-icon-left">
+            <i class="pi pi-home"></i>
+            <p-dropdown id="state" [options]="states" (onChange)="changeCounties($event)"  [(ngModel)]="selectedState"></p-dropdown>
+        </span>
+        </div>
+        <div class="field col-12 md:col-12">
+        <span class="p-float-label p-input-icon-left">
+            <i class="pi pi-home"></i>
+            <p-dropdown id="county" [options]="counties" [(ngModel)]="selectedCounty"></p-dropdown>
+        </span>
+        </div>
+      </div>
+      <ng-template pTemplate="footer">
+        <p-button label="Login" (click)="selectRole('BH')" icon="pi pi-check"></p-button>
+      </ng-template>
+    </p-card>
+    <p-card header="Landesrat/Landesrätin für Gesundheit" subheader="LR" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
+      <ul>
+        <li>Dashboard</li>
+        <li>Übersicht der aktuellen Auslastung</li>
+        <li>Bestandsübersicht</li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <p-button label="Login" (click)="selectRole('CT')" icon="pi pi-check"></p-button>
+      </ng-template>
+    </p-card>
+
+  </div>
+</div>

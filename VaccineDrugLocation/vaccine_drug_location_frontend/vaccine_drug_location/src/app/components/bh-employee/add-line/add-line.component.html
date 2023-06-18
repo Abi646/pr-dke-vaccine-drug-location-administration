@@ -1,0 +1,36 @@
+<h1>Line erstellen und zuweisen</h1>
+
+<form [formGroup]="lineForm" (ngSubmit)="addLine()">
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map-marker"></i>
+      <input type="number" id="lineNumber" pInputText formControlName="lineNumber" required>
+      <label for="lineNumber">Liniennummer</label>
+    </span>
+  </div>
+  <div>
+    <label>Type:</label>
+    <input type="text" formControlName="type" required>
+  </div>
+  <div>
+    <label>Location:</label>
+    <select formControlName="locationId" required>
+      <option value="">Select a location</option>
+      <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Article:</label>
+    <select formControlName="articleId" required>
+      <option value="">Select an article</option>
+      <option *ngFor="let article of articles" [value]="article.id">{{ article.name }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Quantity:</label>
+    <input type="number" formControlName="quantity" required>
+  </div>
+  <div>
+    <button type="submit">Add Line</button>
+  </div>
+</form>

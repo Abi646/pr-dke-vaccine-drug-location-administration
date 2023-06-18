@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/contract-tracing",
+            "outputPath": "dist/contact-tracing",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "contract-tracing:build:production"
+              "browserTarget": "contact-tracing:build:production"
             },
             "development": {
-              "browserTarget": "contract-tracing:build:development"
+              "browserTarget": "contact-tracing:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "contract-tracing:build"
+            "browserTarget": "contact-tracing:build"
           }
         },
         "test": {

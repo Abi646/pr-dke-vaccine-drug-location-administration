@@ -2,10 +2,12 @@ package dke.vaccine_location_drug.service;
 
 import dke.vaccine_location_drug.entity.Line;
 import dke.vaccine_location_drug.repository.LineRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dke.vaccine_location_drug.entity.Article;
 import dke.vaccine_location_drug.repository.ArticleRepository;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,6 +27,11 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+    public Article getArticleById(long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found with id: " + id));
+    }
+
     public Article updateArticle(Long articleId, Article updatedArticle) {
         Article existingArticle = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("Article not found"));
@@ -33,6 +40,7 @@ public class ArticleService {
         existingArticle.setMinAge(updatedArticle.getMinAge());
         existingArticle.setMaxAge(updatedArticle.getMaxAge());
         existingArticle.setType(updatedArticle.getType());
+        existingArticle.setStock(updatedArticle.getStock());
 
         return articleRepository.save(existingArticle);
     }

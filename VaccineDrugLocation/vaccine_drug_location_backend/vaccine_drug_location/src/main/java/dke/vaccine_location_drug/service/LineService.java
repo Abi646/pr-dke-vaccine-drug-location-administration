@@ -41,6 +41,11 @@ public class LineService {
         return lineRepository.save(line);
     }
 
+    public Line getLineById(long id) {
+        return lineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Line not found with id: " + id));
+    }
+
     public Line updateLine(Long lineId, int quantity) {
         Line line = lineRepository.findById(lineId)
                 .orElseThrow(() -> new IllegalArgumentException("Line not found"));

@@ -1,0 +1,118 @@
+<div>
+  <h2>Gesundheits Daten bearbeiten</h2>
+  <h3>{{person.firstName}} {{person.lastName}}</h3>
+</div>
+
+<div class="p-fluid grid">
+  <div class="field col-12 md:col-2">
+        <span class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <p-inputSwitch id="symptoms" (onChange)="updatePotential()" [(ngModel)]="person.sickInformation.symptoms"></p-inputSwitch>
+          <label for="symptoms">Symptome</label>
+          <br>
+          <br>
+          <br>
+          <br>
+        </span>
+  </div>
+  <div class="field col-12 md:col-2">
+        <span class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <p-inputSwitch id="potential" [(ngModel)]="person.sickInformation.potential"></p-inputSwitch>
+          <label for="potential">Verdachtsfall</label>
+          <br>
+          <br>
+          <br>
+          <br>
+        </span>
+  </div>
+  <div class="field col-12 md:col-3">
+        <span *ngIf="person.sickInformation.symptoms" class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+            <p-calendar [maxDate]="minDate" dateFormat="yy-mm-dd" placeholder="05/28/2023" id="symptomStartingDate" inputId="calendar" [(ngModel)]="person.sickInformation.symptomStartingDate"></p-calendar>
+            <label for="symptomStartingDate">Symptome seit: </label>
+        </span>
+  </div>
+
+  <div class="field col-12 md:col-3">
+        <span *ngIf="person.sickInformation.symptoms || person.sickInformation.potential" class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+            <p-calendar placeholder="05/28/2023" dateFormat="yy-mm-dd" id="covidTestDate" inputId="calendar" [(ngModel)]="person.sickInformation.covidTestDate"></p-calendar>
+            <label for="covidTestDate">Test Termin am: </label>
+        </span>
+  </div>
+</div>
+
+<div class="p-fluid grid">
+  <div class="field col-12 md:col-2">
+        <span class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <p-inputSwitch id="sick" [(ngModel)]="person.sickInformation.sick"></p-inputSwitch>
+          <label for="sick">Erkrankt</label>
+          <br>
+          <br>
+          <br>
+          <br>
+        </span>
+  </div>
+  <div class="field col-12 md:col-3">
+        <span class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+            <p-calendar placeholder="05/28/2023" dateFormat="yy-mm-dd" id="positiveCovidTestDate" inputId="calendar" [(ngModel)]="person.sickInformation.positiveCovidTestDate"></p-calendar>
+            <label for="positiveCovidTestDate">Positiver Test am: </label>
+        </span>
+  </div>
+  <div class="field col-12 md:col-3">
+        <span *ngIf="person.sickInformation.sick" class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+            <p-calendar [minDate]="minDate" dateFormat="yy-mm-dd" placeholder="05/28/2023" id="quarantineStartDate" inputId="calendar" [(ngModel)]="person.sickInformation.quarantineStartDate"></p-calendar>
+            <label for="quarantineStartDate">Quarantäne Beginn: </label>
+        </span>
+  </div>
+
+  <div class="field col-12 md:col-3">
+        <span *ngIf="person.sickInformation.sick" class="p-float-label p-input-icon-left">
+          <i class="pi pi-user"></i>
+            <p-calendar [minDate]="minDate" dateFormat="yy-mm-dd" placeholder="05/28/2023" id="quarantineEndDate" inputId="calendar" [(ngModel)]="person.sickInformation.quarantineEndDate"></p-calendar>
+            <label for="quarantineEndDate">quarantäne Ende: </label>
+        </span>
+  </div>
+</div>
+
+<button pButton type="button" label="Save" (click)="updatePerson()" class="p-button-success"></button>
+
+
+
+
+<div>
+  <div>
+    <h2>{{sickContactsArray.length}} Erkrankte Kontakte</h2>
+    <button [disabled]="sickContactsArray.length == 0" pButton type="button" label="Kontakte in Quarantäne schicken" (click)="sendContactsToQuarantine()" class="p-button-success"></button>
+  </div>
+
+  <h2>Alle Kontakte</h2>
+  <p *ngIf="person.contacts.length == 0">Keine Kontakte</p>
+  <p-table *ngIf="person.contacts.length > 0" [value]="contacts" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>SVNR</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Krank</th>
+        <th>Symptome</th>
+        <th>Quarantäne</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-person>
+      <tr>
+        <td>{{person.svnr}}</td>
+        <td>{{person.firstName}}</td>
+        <td>{{person.lastName}}</td>
+        <td>{{person.sickInformation.sick ? 'Ja' : 'Nein'}}</td>
+        <td>{{person.sickInformation.symptoms ? 'Ja' : 'Nein'}}</td>
+        <td>{{person.sickInformation.quarantine ? 'Ja' : 'Nein'}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

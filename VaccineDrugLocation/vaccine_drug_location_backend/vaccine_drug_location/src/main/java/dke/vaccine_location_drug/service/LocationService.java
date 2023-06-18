@@ -47,6 +47,10 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
+    public Location getLocationById(long id) {
+        return locationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
+    }
     public List<Location> searchLocationsByCounty(String county) {
         return locationRepository.findByCountyIgnoreCase(county);
     }

@@ -25,6 +25,12 @@ public class LocationController {
         return new ResponseEntity<>(createdLocation, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Location> getLocationById(@PathVariable int id) {
+        Location location = locationService.getLocationById(id);
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+
     @PutMapping("/{locationId}")
     public ResponseEntity<Location> updateLocation(@PathVariable Long locationId, @RequestBody Location updatedLocation) {
         Location updated = locationService.updateLocation(locationId, updatedLocation);

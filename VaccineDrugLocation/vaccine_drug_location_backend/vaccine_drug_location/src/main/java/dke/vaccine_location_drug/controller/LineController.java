@@ -23,6 +23,12 @@ public class LineController {
         return new ResponseEntity<>(createdLine, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Line> getLineById(@PathVariable long id) {
+        Line line = lineService.getLineById(id);
+        return new ResponseEntity<>(line, HttpStatus.OK);
+    }
+
     @PutMapping("/{lineId}")
     public ResponseEntity<Line> updateLine(@PathVariable Long lineId, @RequestBody Line updatedLine) {
         Line updated = lineService.updateLine(lineId, updatedLine.getQuantity());

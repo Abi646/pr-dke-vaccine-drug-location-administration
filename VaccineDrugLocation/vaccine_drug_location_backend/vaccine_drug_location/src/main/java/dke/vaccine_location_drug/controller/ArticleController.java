@@ -23,6 +23,12 @@ public class ArticleController {
         return new ResponseEntity<>(createdArticle, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Article> getArticleById(@PathVariable int id) {
+        Article article = articleService.getArticleById(id);
+        return ResponseEntity.ok(article);
+    }
+
     @PutMapping("/{articleId}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long articleId, @RequestBody Article updatedArticle) {
         Article updated = articleService.updateArticle(articleId, updatedArticle);
