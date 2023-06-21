@@ -1,0 +1,64 @@
+<h2>Standort hinzufügen</h2>
+
+<form [formGroup]="locationForm" (ngSubmit)="saveLocation()" class="p-fluid grid">
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <input type="text" id="name" pInputText formControlName="name" required>
+      <label for="name">Name des Standorts</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="locationForm.get('name')?.invalid && locationForm.get('name')?.touched">
+      Name des Standorts ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-globe"></i>
+      <p-dropdown id="county" [options]="countyOptions" formControlName="county" placeholder="Bezirk"></p-dropdown>
+      <label for="county">Bezirk</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="locationForm.get('county')?.invalid && locationForm.get('county')?.touched">
+      Bezirk ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map-marker"></i>
+      <input type="text" id="address" pInputText formControlName="address" required>
+      <label for="address">Adresse</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="locationForm.get('address')?.invalid && locationForm.get('address')?.touched">
+      Adresse ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map"></i>
+      <p-dropdown id="type" [options]="typeOptions" formControlName="type" placeholder="Standorttyp"></p-dropdown>
+      <label for="type">Standorttyp</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="locationForm.get('type')?.invalid && locationForm.get('type')?.touched">
+      Standorttyp ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-clock"></i>
+      <input type="number" id="duration" pInputText formControlName="duration" required>
+      <label for="duration">Dauer (in Minuten)</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="locationForm.get('duration')?.invalid && locationForm.get('duration')?.touched">
+      Dauer ist erforderlich.
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button pButton type="submit" label="Speichern" class="blue-success" [disabled]="!isFormValid()"></button>
+  </div>
+</form>
+
+<p-toast></p-toast>

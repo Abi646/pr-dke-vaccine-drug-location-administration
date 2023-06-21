@@ -1,0 +1,42 @@
+<h2>Artikel bearbeiten</h2>
+<div class="p-fluid grid">
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <input type="text" id="name" pInputText [(ngModel)]="article.name" name="name" required>
+      <label for="name"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-calendar-minus"></i>
+      <input type="number" id="minAge" pInputText [(ngModel)]="article.minAge" name="minAge" required>
+      <label for="minAge"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-calendar-plus"></i>
+      <input type="number" id="maxAge" pInputText [(ngModel)]="article.maxAge" name="maxAge" required>
+      <label for="maxAge"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-list"></i>
+       <p-dropdown id="type" [options]="typeOptions" [(ngModel)]="article.type" ></p-dropdown>
+      <label for="type"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-inbox"></i>
+      <input type="number" id="stock" pInputText [(ngModel)]="article.stock" name="stock" required>
+      <label for="stock"></label>
+    </span>
+  </div>
+</div>
+
+<button pButton type="button" label="Speichern" class="blue-button-success" (click)="updateArticle()" [disabled]="!isFormValid()"></button>
+
+<p-toast></p-toast>

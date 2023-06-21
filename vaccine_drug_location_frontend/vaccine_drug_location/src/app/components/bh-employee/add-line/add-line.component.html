@@ -1,0 +1,37 @@
+<div class="add-line-form">
+  <h2>Line hinzufügen</h2>
+  <form [formGroup]="lineForm" (ngSubmit)="addLine()">
+    <div class="form-field">
+      <label for="lineNumber">Liniennummer:</label>
+      <input id="lineNumber" type="number" formControlName="lineNumber" />
+    </div>
+    <div class="form-field">
+      <label for="articleId">Artikel:</label>
+      <p-dropdown
+        id="articleId"
+        formControlName="articleId"
+        [options]="articles"
+        optionLabel="name"
+      ></p-dropdown>
+    </div>
+    <div class="form-field">
+      <label for="quantity">Kontingent:</label>
+      <input id="quantity" type="number" formControlName="quantity" />
+      <span *ngIf="lineForm.get('quantity')?.invalid && lineForm.get('quantity')?.dirty">
+        Quantity is required and should be greater than or equal to 0.
+      </span>
+    </div>
+    <div class="form-field">
+      <label for="locationId">Standort:</label>
+      <p-dropdown
+        id="locationId"
+        formControlName="locationId"
+        [options]="locations"
+        optionLabel="name"
+      ></p-dropdown>
+    </div>
+    <div class="button-container">
+      <button pButton type="submit" label="Linie hinzufügen" [disabled]="lineForm.invalid"></button>
+    </div>
+  </form>
+</div>

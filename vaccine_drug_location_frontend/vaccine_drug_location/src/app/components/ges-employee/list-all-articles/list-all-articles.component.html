@@ -1,0 +1,52 @@
+<h2>Liste aller Artikel</h2>
+
+<div class="col-12 mb-2 lg:col-4 lg:mb-0">
+  <span  class="p-input-icon-right">
+    <input type="text" p-list [(ngModel)]="searchName" (ngModelChange)="searchArticlesByName()" placeholder="Suche nach Name " class="p-inputtext p-component p-element class="
+           pInputText p-component p-element>
+    <i class="pi pi-search"></i>
+</span>
+</div>
+
+<div *ngIf="deletingArticleId" class="blue p-message p-message-info">
+  <span class="p-message-icon pi pi-info-circle"></span>
+  Möchten Sie diesen Artikel wirklich löschen?
+  <button (click)="confirmDeleteArticle()" pButton class="p-button-primary">Ja</button>
+  <button (click)="deletingArticleId = undefined" pButton class="p-button-secondary">Nein</button>
+</div>
+
+<p-table [value]="articles" [paginator]="true" [rows]="10" [responsive]="true" class="articles-table">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Artikel ID</th>
+      <th>Name</th>
+      <th>Mindestalter</th>
+      <th>Höchstalter</th>
+      <th>Typ</th>
+      <th>Bestand</th>
+      <th>Aktionen</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-article>
+    <tr>
+      <td>{{ article.id }}</td>
+      <td>{{ article.name }}</td>
+      <td>{{ article.minAge }}</td>
+      <td>{{ article.maxAge }}</td>
+      <td>{{ article.type }}</td>
+      <td>
+        <span *ngIf="!article.editing">{{ article.stock }}</span>
+        <input *ngIf="article.editing" type="number" [(ngModel)]="article.stock" name="stock" required>
+      </td>
+      <td>
+        <button (click)="editArticle(article)" pButton class="p-button p-button-primary">Bearbeiten</button>
+        <button *ngIf="article.id" (click)="deleteArticle(article.id)" pButton class="p-button p-button-danger">Löschen</button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7" class="no-articles-message">Keine Artikel gefunden.</td>
+    </tr>
+  </ng-template>
+</p-table>

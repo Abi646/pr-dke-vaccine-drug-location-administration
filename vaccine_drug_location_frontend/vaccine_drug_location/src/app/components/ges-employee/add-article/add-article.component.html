@@ -1,0 +1,53 @@
+<h2>Artikel hinzufügen</h2>
+
+<div class="p-fluid grid">
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <input type="text" id="name" pInputText [(ngModel)]="article.name" required>
+      <label for="name">Name des Artikels</label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-calendar-minus"></i>
+      <input type="number" id="minAge" pInputText [(ngModel)]="article.minAge" required>
+      <label for="minAge">Mindestalter</label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-calendar-plus"></i>
+      <input type="number" id="maxAge" pInputText [(ngModel)]="article.maxAge" required>
+      <label for="maxAge">Höchstalter</label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <p-dropdown id="type" [options]="typeOptions" [(ngModel)]="article.type" ></p-dropdown>
+      <label for="type">Typ auswählen</label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-inbox"></i>
+      <input type="number" id="stock" pInputText [(ngModel)]="article.stock" required>
+      <label for="stock">Lagerbestand</label>
+    </span>
+  </div>
+</div>
+
+<div *ngIf="minAgeError" class="p-error">
+  Mindestalter muss kleiner sein als Höchstalter.
+</div>
+
+<div *ngIf="typeError" class="p-error">
+  Ungültiger Typ. Der Typ kann nur 'vaccine' oder 'drug' sein.
+</div>
+
+<div class="col-12">
+<button pButton type="submit" label="Speichern" (click)="saveArticle()" class="blue-success" [disabled]="!isFormValid()"></button>
+</div>
+
+
+<p-toast></p-toast>

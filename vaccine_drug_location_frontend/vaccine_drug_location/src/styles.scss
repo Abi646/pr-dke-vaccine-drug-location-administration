@@ -1,0 +1,60 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.blue {
+  color: var(--primary-color);
+}
+
+.no-articles-message {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.articles-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.articles-table th,
+.articles-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+.articles-table th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.edit-button,
+.delete-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #cc0000;
+}
+
+.delete-button:hover {
+  background-color: #990000;
+}

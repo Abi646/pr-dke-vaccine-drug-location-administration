@@ -1,0 +1,42 @@
+<h2>Standort bearbeiten</h2>
+<div class="p-fluid grid">
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <input type="text" id="name" pInputText [(ngModel)]="location.name" name="name" required>
+      <label for="name"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-globe"></i>
+      <p-dropdown id="county" [options]="countyOptions" [(ngModel)]="location.county" ></p-dropdown>
+      <label for="county"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map-marker"></i>
+      <input type="text" id="address" pInputText [(ngModel)]="location.address" name="address" required>
+      <label for="address"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map"></i>
+       <p-dropdown id="type" [options]="typeOptions" [(ngModel)]="location.type" ></p-dropdown>
+      <label for="type"></label>
+    </span>
+  </div>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-inbox"></i>
+      <input type="number" id="duration" pInputText [(ngModel)]="location.duration" name="stock" required>
+      <label for="duration"></label>
+    </span>
+  </div>
+
+<button pButton type="button" label="Speichern" class="blue-button-success" (click)="updateLocation()" [disabled]="!isFormValid()"></button>
+
+<p-toast></p-toast>
+</div>
