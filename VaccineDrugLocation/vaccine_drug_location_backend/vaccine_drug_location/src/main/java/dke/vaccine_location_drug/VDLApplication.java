@@ -32,7 +32,7 @@ public class VDLApplication {
 		if (articleRepository.count() == 0 && lineRepository.count() == 0 && locationRepository.count() == 0) {
 			// Erzeuge neue Artikel
 			Article article1 = new Article();
-			article1.setName("Comirnaty (BioNTech/Pfizer)");
+			article1.setName("Comirnaty-(BioNTech/Pfizer)");
 			article1.setType("vaccine");
 			article1.setMinAge(2);
 			article1.setMaxAge(60);
@@ -40,7 +40,7 @@ public class VDLApplication {
 			articleRepository.save(article1);
 
 			Article article2 = new Article();
-			article2.setName("Spikevax (Moderna)");
+			article2.setName("Spikevax-(Moderna)");
 			article2.setType("vaccine");
 			article2.setMinAge(2);
 			article2.setMaxAge(100);
@@ -48,7 +48,7 @@ public class VDLApplication {
 			articleRepository.save(article2);
 
 			Article article3 = new Article();
-			article3.setName("Vaxzevria (AstraZeneca)");
+			article3.setName("Vaxzevria-(AstraZeneca)");
 			article3.setType("vaccine");
 			article3.setMinAge(1);
 			article3.setMaxAge(99);
@@ -56,7 +56,7 @@ public class VDLApplication {
 			articleRepository.save(article3);
 
 			Article article4 = new Article();
-			article4.setName("Janssen (Johnson & Johnson)");
+			article4.setName("Janssen-(Johnson&Johnson)");
 			article4.setType("vaccine");
 			article4.setMinAge(16);
 			article4.setMaxAge(99);
@@ -89,7 +89,7 @@ public class VDLApplication {
 
 			// Erzeuge Standorte mit je 2 Linien
 			Location location1 = new Location();
-			location1.setName("Wels Landhof");
+			location1.setName("Wels-Landhof");
 			location1.setCounty("Wels-Land");
 			location1.setAddress("Welserlandstrasse 32");
 			location1.setType("vaccination");
@@ -97,7 +97,7 @@ public class VDLApplication {
 			locationRepository.save(location1);
 
 			Location location2 = new Location();
-			location2.setName("Rathaus Marchtrenk");
+			location2.setName("Rathaus-Marchtrenk");
 			location2.setCounty("Wels-Land");
 			location2.setAddress("Marchtrenkerstrasse 45");
 			location2.setType("medication");
@@ -137,7 +137,7 @@ public class VDLApplication {
 			lineRepository.save(line4);
 
 			Location location3 = new Location();
-			location3.setName("Linzer Markt");
+			location3.setName("Linzer-Markt");
 			location3.setCounty("Linz-Land");
 			location3.setAddress("Marktstrasse 20");
 			location3.setType("vaccination");
@@ -145,7 +145,7 @@ public class VDLApplication {
 			locationRepository.save(location3);
 
 			Location location4 = new Location();
-			location4.setName("Rathaus Linz");
+			location4.setName("Rathaus-Linz");
 			location4.setCounty("Linz-Land");
 			location4.setAddress("Linzerstrasse 12");
 			location4.setType("medication");
@@ -193,7 +193,7 @@ public class VDLApplication {
 			locationRepository.save(location5);
 
 			Location location6 = new Location();
-			location6.setName("Messe Gmunden");
+			location6.setName("Messe-Gmunden");
 			location6.setCounty("Gmunden");
 			location6.setAddress("Messestrasse 1");
 			location6.setType("medication");

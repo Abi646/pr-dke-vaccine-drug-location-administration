@@ -66,24 +66,18 @@ public class LineController {
     }
 
     @PostMapping("/create-appointment/{location}/line/{line}")
-    public ResponseEntity<String> decreaseQuantityByAppointment(@PathVariable("location") String locationName, @PathVariable("line") int lineNumber, @RequestBody String articleName) {
+    public void decreaseQuantityByAppointment(@PathVariable("location") String locationName, @PathVariable("line") int lineNumber, @RequestBody String articleName) {
         Line line = lineService.getLineByLocationNameAndLineNumber(locationName, lineNumber);
         if (line != null && line.getArticle().getName().equalsIgnoreCase(articleName)) {
             lineService.decreaseQuantity(line.getId());
-            return ResponseEntity.ok("Kontingent verringert");
         }
-        return ResponseEntity.badRequest().body("Ungültige Anfrage");
     }
 
     @PostMapping("/set-free/{location}/line/{line}")
-    public ResponseEntity<String> increaseQuantityByCancellation(@PathVariable("location") String locationName, @PathVariable("line") int lineNumber, @RequestBody String articleName) {
+    public void increaseQuantityByCancellation(@PathVariable("location") String locationName, @PathVariable("line") int lineNumber, @RequestBody String articleName) {
         Line line = lineService.getLineByLocationNameAndLineNumber(locationName, lineNumber);
         if (line != null && line.getArticle().getName().equalsIgnoreCase(articleName)) {
             lineService.increaseQuantity(line.getId());
-            return ResponseEntity.ok("Kontingent erhöht");
         }
-        return ResponseEntity.badRequest().body("Ungültige Anfrage");
     }
-
-
 }
