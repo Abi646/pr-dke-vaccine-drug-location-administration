@@ -14,6 +14,7 @@ import {AddLocationComponent} from "./components/bh-employee/add-location/add-lo
 import {ListLocationsComponent} from "./components/bh-employee/list-locations/list-locations.component";
 import {EditLocationComponent} from "./components/bh-employee/edit-location/edit-location.component";
 import {AddLineComponent} from "./components/bh-employee/add-line/add-line.component";
+import {ListLinesComponent} from "./components/bh-employee/list-lines/list-lines.component";
 
 const routes: Routes = [
   {path: 'ct-home', component: CTHomeComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'locations', component: ListLocationsComponent},
   {path: 'add-location', component: AddLocationComponent},
   {path: 'locations/:id', component: EditLocationComponent},
-  {path: 'lines', component: AddLineComponent},
+  {path: 'add-lines', component: AddLineComponent},
+  {path: 'lines', component: ListLinesComponent},
   {path: 'login', component: LoginComponent},
   {path: 'add', component: AddPersonComponent},
   {path: 'edit/:id', component: EditPersonComponent},

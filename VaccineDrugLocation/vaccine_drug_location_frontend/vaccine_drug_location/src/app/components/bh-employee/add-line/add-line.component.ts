@@ -25,6 +25,7 @@ export class AddLineComponent implements OnInit {
   ) {
     this.lineForm = this.formBuilder.group({
       lineNumber: ['', Validators.required],
+      type: ['', Validators.required],
       articleId: ['', Validators.required],
       quantity: ['', Validators.compose([Validators.required, Validators.max(0)])],
       locationId: ['', Validators.required]
@@ -75,7 +76,7 @@ export class AddLineComponent implements OnInit {
         this.lineService.createLine(line).subscribe(
           (createdLine: Line) => {
             console.log('Line created successfully:', createdLine);
-            // Zurück zur Übersichtsseite oder eine andere Aktion durchführen
+            // Perform any further actions, such as navigating back to the overview page
           },
           (error) => {
             console.log('Error creating line:', error);

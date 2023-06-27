@@ -43,6 +43,7 @@ import {ArticleService} from "./services/article.service";
 import {LineService} from "./services/line.service";
 import {LocationService} from "./services/location.service";
 import { AddLineComponent } from './components/bh-employee/add-line/add-line.component';
+import { ListLinesComponent } from './components/bh-employee/list-lines/list-lines.component';
 
 
 
@@ -65,7 +66,8 @@ import { AddLineComponent } from './components/bh-employee/add-line/add-line.com
     AddLocationComponent,
     EditLocationComponent,
     ListLocationsComponent,
-    AddLineComponent
+    AddLineComponent,
+    ListLinesComponent
   ],
   imports: [
     BrowserModule,

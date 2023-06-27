@@ -55,8 +55,13 @@ export class AppComponent {
           routerLink: '/locations'
         },
         {
-          label: 'Line hinzufügen',
-          icon: 'pi pi-fw pi-power-off',
+          label: 'Linie hinzufügen',
+          icon: 'pi pi-fw pi-file',
+          routerLink: '/add-lines'
+        },
+        {
+          label: 'Alle Linien anzeigen',
+          icon: 'pi pi-fw pi-map',
           routerLink: '/lines'
         },
         {

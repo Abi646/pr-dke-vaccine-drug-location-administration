@@ -1,0 +1,44 @@
+<h1>Liste aller Linien</h1>
+
+<div class="col-12 mb-2 lg:col-4 lg:mb-0">
+  <span class="p-input-icon-right">
+    <input type="text" pInputText [(ngModel)]="searchLineNumber" (ngModelChange)="getLineById($event)" placeholder="Suche nach Liniennummer">
+    <i class="pi pi-search"></i>
+  </span>
+</div>
+
+<div *ngIf="deletingLineId" class="blue p-message p-message-info">
+  <span class="p-message-icon pi pi-info-circle"></span>
+  Möchten Sie diese Linie wirklich löschen?
+  <button (click)="confirmDeleteLine()" pButton class="p-button-primary">Ja</button>
+  <button (click)="deletingLineId = undefined" pButton class="p-button-secondary">Nein</button>
+</div>
+
+<p-table [value]="lines" [paginator]="true" [rows]="10" [responsive]="true" class="lines-table">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Liniennummer</th>
+      <th>Artikel</th>
+      <th>Menge</th>
+      <th>Standort</th>
+      <th>Aktionen</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-line>
+    <tr>
+      <td>{{ line.lineNumber }}</td>
+      <td>{{ line.article.name }}</td>
+      <td>{{ line.quantity }}</td>
+      <td>{{ line.location.name }}</td>
+      <td>
+        <button (click)="editLine(line)" pButton class="p-button p-button-primary">Bearbeiten</button>
+        <button *ngIf="line.id" (click)="deleteLine(line.id)" pButton class="p-button p-button-danger">Löschen</button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5" class="no-lines-message">Keine Linien gefunden.</td>
+    </tr>
+  </ng-template>
+</p-table>
