@@ -1,0 +1,7 @@
+<div class="dashboard">
+  <h1 style="font-family: var(--font-family); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;">Dashboard</h1>
+  <div class="line-card" *ngFor="let line of lines" style="border: 1px solid #ccc; border-radius: 5px; padding: 1rem; margin-bottom: 1rem; background-color: #f0f0f0;">
+    <h2 style="color: var(--primary-color);">{{ line.name }}</h2>
+    <p style="margin-top: 0.5rem;">Appointments: {{ line.appointments }}</p>
+  </div>
+</div>

@@ -6,83 +6,95 @@ import { Location } from '../../../entities/Location';
 import { LineService } from '../../../services/line.service';
 import { ArticleService } from '../../../services/article.service';
 import { LocationService } from '../../../services/location.service';
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-add-line',
   templateUrl: './add-line.component.html',
-  styleUrls: ['./add-line.component.scss']
+  styleUrls: ['./add-line.component.scss'],
+  providers: [MessageService]
 })
 export class AddLineComponent implements OnInit {
-  lineForm: FormGroup;
-  articles: Article[] = [];
+  lineForm!: FormGroup;
+  typeOptions: any[] = [
+    { label: 'Impfstoff', value: 'vaccine' },
+    { label: 'Medikament', value: 'drug' }
+  ];
+  line: {
+    quantity: number | null;
+    lineNumber: number | null;
+    type: string;
+    article: Article | null;
+    location: Location | null;
+  } = {
+    lineNumber: null,
+    type: '',
+    article: null,
+    location: null,
+    quantity: null
+  };
+
   locations: Location[] = [];
+  articles: Article[] = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private lineService: LineService,
+    private locationService: LocationService,
     private articleService: ArticleService,
-    private locationService: LocationService
-  ) {
+    private messageService: MessageService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit() {
+    // Initialize the form and load data
     this.lineForm = this.formBuilder.group({
-      lineNumber: ['', Validators.required],
+      lineNumber: [null, Validators.required],
       type: ['', Validators.required],
-      articleId: ['', Validators.required],
-      quantity: ['', Validators.compose([Validators.required, Validators.max(0)])],
-      locationId: ['', Validators.required]
+      article: [null, Validators.required],
+      location: [null, Validators.required],
+      quantity: [null, Validators.required]
+    });
+
+    this.loadLocations();
+    this.loadArticles();
+  }
+
+  loadLocations() {
+    this.locationService.getAllLocations().subscribe((locations) => {
+      this.locations = locations;
     });
   }
 
-  ngOnInit(): void {
-    this.loadArticles();
-    this.loadLocations();
-  }
-
-  loadArticles(): void {
-    this.articleService.getAllArticles().subscribe(
-      (articles: Article[]) => {
-        this.articles = articles;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  loadLocations(): void {
-    this.locationService.getAllLocations().subscribe(
-      (locations: Location[]) => {
-        this.locations = locations;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  loadArticles() {
+    this.articleService.getAllArticles().subscribe((articles) => {
+      this.articles = articles;
+    });
   }
 
   addLine(): void {
-    if (this.lineForm.valid) {
-      const lineNumber = this.lineForm.get('lineNumber')?.value;
-      const articleId = this.lineForm.get('articleId')?.value;
-      const quantity = this.lineForm.get('quantity')?.value;
-      const locationId = this.lineForm.get('locationId')?.value;
-
-      const article = this.articles.find((art) => art.id === articleId);
-      const location = this.locations.find((loc) => loc.id === locationId);
-
-      if (article && location) {
-        // @ts-ignore
-        const line = new Line(lineNumber, article, quantity, location);
-
-        this.lineService.createLine(line).subscribe(
-          (createdLine: Line) => {
-            console.log('Line created successfully:', createdLine);
-            // Perform any further actions, such as navigating back to the overview page
-          },
-          (error) => {
-            console.log('Error creating line:', error);
-          }
-        );
-      }
+    if (this.lineForm.invalid) {
+      this.lineForm.markAllAsTouched();
+      return;
     }
+
+    const newLine: Line = {
+      lineNumber: this.lineForm.value.lineNumber,
+      type: this.lineForm.value.type,
+      article: this.lineForm.value.article,
+      location: this.lineForm.value.location,
+      quantity: this.lineForm.value.quantity
+    };
+
+    this.lineService.createLine(newLine).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Linie wurde erfolgreich hinzugefügt!'
+      });
+      this.lineForm.reset();
+    });
+  }
+  isFormValid(): boolean {
+    return this.lineForm.valid;
   }
 }

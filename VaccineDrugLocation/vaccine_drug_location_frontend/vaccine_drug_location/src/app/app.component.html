@@ -1,37 +1,41 @@
-<div *ngIf="role == 'CT'">
-  <p-toolbar>
-    <div class="p-toolbar-group-start">
-      <p>Vaccine and Drug Administration</p>
+<div *ngIf="role | async as roleValue">
+
+  <div *ngIf="roleValue == 'GES'">
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <p>Vaccine and Drug Administration</p>
+      </div>
+    </p-toolbar>
+
+    <div class="card">
+      <p-menubar [model]="GESItems"></p-menubar>
     </div>
-  </p-toolbar>
-
-  <div class="card">
-    <p-menubar [model]="CTItems"></p-menubar>
   </div>
-</div>
 
-<div *ngIf="role == 'BH'">
-  <p-toolbar>
-    <div class="p-toolbar-group-start">
-      <p>Location and Line Administration</p>
+  <div *ngIf="roleValue == 'BH'">
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <p>Location and Line Administration</p>
+      </div>
+    </p-toolbar>
+
+    <div class="card">
+      <p-menubar [model]="BHItems"></p-menubar>
     </div>
-  </p-toolbar>
-
-  <div class="card">
-    <p-menubar [model]="BHItems"></p-menubar>
   </div>
-</div>
 
-<div *ngIf="role == 'BH'">
-  <p-toolbar>
-    <div class="p-toolbar-group-start">
-      <p>Dashboard</p>
+  <div *ngIf="roleValue == 'LR'">
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <p>Dashboard</p>
+      </div>
+    </p-toolbar>
+
+    <div class="card">
+      <p-menubar [model]="LRItems"></p-menubar>
     </div>
-  </p-toolbar>
-
-  <div class="card">
-    <p-menubar [model]="BHItems"></p-menubar>
   </div>
+
 </div>
 
 <router-outlet></router-outlet>

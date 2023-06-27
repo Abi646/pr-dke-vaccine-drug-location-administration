@@ -1,12 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CTHomeComponent} from "./components/contact-tracer/ct-home/c-t-home.component";
 import {LoginComponent} from "./components/login/login.component";
-import {AddPersonComponent} from "./components/contact-tracer/add-person/add-person.component";
-import {BhHomeComponent} from "./components/bh-employee/bh-home/bh-home.component";
-import {EditPersonComponent} from "./components/contact-tracer/edit-person/edit-person.component";
-import {SickInfoComponent} from "./components/contact-tracer/sick-info/sick-info.component";
-import {ClusterComponent} from "./components/contact-tracer/cluster/cluster.component";
 import {AddArticleComponent} from "./components/ges-employee/add-article/add-article.component";
 import {ListAllArticlesComponent} from "./components/ges-employee/list-all-articles/list-all-articles.component";
 import {EditArticleComponent} from "./components/ges-employee/edit-article/edit-article.component";
@@ -15,10 +9,11 @@ import {ListLocationsComponent} from "./components/bh-employee/list-locations/li
 import {EditLocationComponent} from "./components/bh-employee/edit-location/edit-location.component";
 import {AddLineComponent} from "./components/bh-employee/add-line/add-line.component";
 import {ListLinesComponent} from "./components/bh-employee/list-lines/list-lines.component";
+import {DashboardComponent} from "./components/lr-employee/dashboard/dashboard.component";
+import {EditLineComponent} from "./components/bh-employee/edit-line/edit-line.component";
 
 const routes: Routes = [
-  {path: 'ct-home', component: CTHomeComponent},
-  {path: 'bh-home/:state/:county', component: BhHomeComponent},
+  {path: 'home', component: LoginComponent},
   {path: 'add-article', component: AddArticleComponent},
   {path: 'articles', component: ListAllArticlesComponent},
   {path: 'articles/:id', component: EditArticleComponent},
@@ -26,13 +21,11 @@ const routes: Routes = [
   {path: 'add-location', component: AddLocationComponent},
   {path: 'locations/:id', component: EditLocationComponent},
   {path: 'add-lines', component: AddLineComponent},
+  {path: 'lines/:id', component: EditLineComponent},
   {path: 'lines', component: ListLinesComponent},
+  {path: 'dashboard', component: DashboardComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'add', component: AddPersonComponent},
-  {path: 'edit/:id', component: EditPersonComponent},
-  {path: 'sickInfo/:id', component: SickInfoComponent},
-  {path: 'cluster', component: ClusterComponent},
-  {path: '**', component: CTHomeComponent}
+  {path: '**', component: LoginComponent}
 ];
 
 @NgModule({

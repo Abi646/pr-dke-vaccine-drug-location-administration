@@ -1,0 +1,64 @@
+<h2 class="edit-line-heading">Linie bearbeiten</h2>
+
+  <form [formGroup]="lineForm" (ngSubmit)="updateLine()" class="p-fluid grid">
+    <div class="p-field col-12 md-4">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-tag"></i>
+        <input type="number" id="lineNumber" pInputText formControlName="lineNumber" required>
+        <label for="lineNumber">Line Number</label>
+      </span>
+      <div class="invalid-feedback" *ngIf="lineForm.get('lineNumber')?.invalid && lineForm.get('lineNumber')?.touched">
+        Line Number is required.
+      </div>
+    </div>
+
+    <div class="p-field col-12 md-4">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-tag"></i>
+        <p-dropdown id="type" [options]="typeOptions" formControlName="type" placeholder="Type"></p-dropdown>
+        <label for="type">Type</label>
+      </span>
+      <div class="invalid-feedback" *ngIf="lineForm.get('type')?.invalid && lineForm.get('type')?.touched">
+        Type is required.
+      </div>
+    </div>
+
+    <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map"></i>
+      <p-dropdown id="location" [options]="locations" formControlName="location" placeholder="Location" optionLabel="name"></p-dropdown>
+      <label for="location">Location</label>
+    </span>
+      <div class="invalid-feedback" *ngIf="lineForm.get('location')?.invalid && lineForm.get('location')?.touched">
+        Standort ist erforderlich.
+      </div>
+    </div>
+
+    <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <p-dropdown id="article" [options]="articles" formControlName="article" placeholder="Article" optionLabel="name"></p-dropdown>
+      <label for="article">Article</label>
+    </span>
+      <div class="invalid-feedback" *ngIf="lineForm.get('article')?.invalid && lineForm.get('article')?.touched">
+        Artikel ist erforderlich.
+      </div>
+    </div>
+
+    <div class="p-field col-12 md-4">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-tag"></i>
+        <input type="number" id="quantity" pInputText formControlName="quantity" required>
+        <label for="quantity">Quantity</label>
+      </span>
+      <div class="invalid-feedback" *ngIf="lineForm.get('quantity')?.invalid && lineForm.get('quantity')?.touched">
+        Quantity is required.
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button pButton type="submit" label="Linie speichern" class="blue-success" [disabled]="!isFormValid()"></button>
+    </div>
+  </form>
+
+<p-toast></p-toast>

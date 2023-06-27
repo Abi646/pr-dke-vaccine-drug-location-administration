@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Line } from '../entities/Line';
+import {Article} from "../entities/Article";
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,16 @@ export class LineService {
 
   constructor(private http: HttpClient) {}
 
-  createLine(line: Line): Observable<Line> {
+  createLine(line: {
+    lineNumber: number,
+    type: string,
+    article: Article,
+    quantity?: number,
+    location?: Location
+  }): Observable<Line> {
     return this.http.post<Line>(this.apiUrl, line);
   }
+
 
   getLineById(id: number): Observable<Line> {
     return this.http.get<Line>(`${this.apiUrl}/${id}`);

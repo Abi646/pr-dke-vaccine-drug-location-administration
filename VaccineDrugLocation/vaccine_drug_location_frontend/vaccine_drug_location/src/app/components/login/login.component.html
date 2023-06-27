@@ -1,49 +1,50 @@
 <div class="surface-card p-2 shadow-2 border-round w-full lg:w-12">
-  <div class="flex align-items-center justify-content-center mb-6">
-    <p-card header="Abteilung Gesundheit" subheader="GES" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
-      <ul>
-        <li>Impfstoffverwaltung</li>
-        <li>Medikamentenverwaltung</li>
-        <li>Bestandsverwaltung</li>
-      </ul>
-      <ng-template pTemplate="footer">
-        <p-button label="Login" (click)="selectRole('CT')" icon="pi pi-check"></p-button>
-      </ng-template>
-    </p-card>
+  <div class="greeting-container">
+    <h2 class="greeting-text">Willkommen! Bitte wählen Sie Ihre Rolle</h2>
+  </div>
+  <div class="flex flex-wrap justify-center mb-6">
+    <div class="card-container">
+      <p-card header="Abteilung Gesundheit" [style]="{width: '360px'}" styleClass="shadow-2 bg-blue-500 text-white m-4">
+        <div>Impfstoffverwaltung</div>
+        <div>Medikamentenverwaltung</div>
+        <div>Bestandsverwaltung</div>
+        <ng-template pTemplate="footer">
+          <div class="button-container">
+            <p-button label="Login" (click)="selectRole('GES')" icon="pi pi-check" styleClass="p-button-rounded p-button-secondary"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
 
-    <p-card header="Bezirkshauptmannschaft MitarbeiterIn" subheader="BH" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
-      <ul>
-        <li>Standortverwaltung</li>
-        <li>Linienverwaltung</li>
-      </ul>
-      <div class="p-fluid grid">
-        <div class="field col-12 md:col-12">
-        <span class="p-float-label p-input-icon-left">
-            <i class="pi pi-home"></i>
-            <p-dropdown id="state" [options]="states" (onChange)="changeCounties($event)"  [(ngModel)]="selectedState"></p-dropdown>
-        </span>
+    <div class="card-container">
+      <p-card header="Bezirkshauptmannschaft MitarbeiterIn" [style]="{width: '360px'}" styleClass="shadow-2 bg-green-500 text-white m-4">
+        <div>Standortverwaltung</div>
+        <div>Linienverwaltung</div>
+        <div class="p-fluid grid">
+          <div class="field col-12 md:col-12">
+            <span class="p-float-label p-input-icon-left">
+            </span>
+          </div>
         </div>
-        <div class="field col-12 md:col-12">
-        <span class="p-float-label p-input-icon-left">
-            <i class="pi pi-home"></i>
-            <p-dropdown id="county" [options]="counties" [(ngModel)]="selectedCounty"></p-dropdown>
-        </span>
-        </div>
-      </div>
-      <ng-template pTemplate="footer">
-        <p-button label="Login" (click)="selectRole('BH')" icon="pi pi-check"></p-button>
-      </ng-template>
-    </p-card>
-    <p-card header="Landesrat/Landesrätin für Gesundheit" subheader="LR" [style]="{width: '360px'}" styleClass="shadow-2" class="m-4">
-      <ul>
-        <li>Dashboard</li>
-        <li>Übersicht der aktuellen Auslastung</li>
-        <li>Bestandsübersicht</li>
-      </ul>
-      <ng-template pTemplate="footer">
-        <p-button label="Login" (click)="selectRole('CT')" icon="pi pi-check"></p-button>
-      </ng-template>
-    </p-card>
+        <ng-template pTemplate="footer">
+          <div class="button-container">
+            <p-button label="Login" (click)="selectRole('BH')" icon="pi pi-check" styleClass="p-button-rounded p-button-secondary"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
 
+    <div class="card-container">
+      <p-card header="Landesrat/Landesrätin für Gesundheit" [style]="{width: '360px'}" styleClass="shadow-2 bg-yellow-500 text-white m-4">
+        <div>Dashboard</div>
+        <div>Übersicht der aktuellen Auslastung</div>
+        <div>Bestandsübersicht</div>
+        <ng-template pTemplate="footer">
+          <div class="button-container">
+            <p-button label="Login" (click)="selectRole('LR')" icon="pi pi-check" styleClass="p-button-rounded p-button-secondary"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
   </div>
 </div>

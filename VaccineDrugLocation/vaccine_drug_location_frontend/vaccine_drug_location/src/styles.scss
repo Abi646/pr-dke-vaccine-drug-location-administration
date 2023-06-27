@@ -58,3 +58,44 @@ body {
 .delete-button:hover {
   background-color: #990000;
 }
+
+.card-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.greeting-container {
+  text-align: center;
+}
+
+.greeting-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #f58c42;
+  animation: colorChange 2s infinite alternate;
+}
+
+@keyframes colorChange {
+  0% {
+    color: #f58c42;
+  }
+  50% {
+    color: #53a5d1;
+  }
+  100% {
+    color: #ffca4e;
+  }
+}
+
+

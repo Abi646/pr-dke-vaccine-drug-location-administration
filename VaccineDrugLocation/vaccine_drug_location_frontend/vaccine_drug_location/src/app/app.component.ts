@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService, Role} from "./services/auth.service";
 import {MenuItem} from "primeng/api";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -10,30 +11,25 @@ import {MenuItem} from "primeng/api";
 })
 export class AppComponent {
   title = 'Vaccine/Drug + Location/Line Administration';
-  role: Role | undefined;
-  public CTItems: MenuItem[] = [];
+  role: Observable<Role | undefined>;
+  public GESItems: MenuItem[] = [];
   public BHItems: MenuItem[] = [];
+  public LRItems: MenuItem[] = [];
 
   constructor(private router: Router, private authService: AuthService) {
-
+    this.role = this.authService.getRole();
   }
 
   ngOnInit() {
-    console.log('test');
-    this.role = this.authService.getRole();
+    this.role.subscribe(role => {
+      if (role === undefined) {
+        this.router.navigate(['login']);
+      } else {
+        this.router.navigate(['dashboard']);
+      }
+    });
 
-    if (this.role === undefined) {
-      this.router.navigate(['login']);
-    } else {
-      this.router.navigate(['ct-home'])
-    }
-
-      this.CTItems = [
-        {
-          label: 'Übersicht',
-          icon: 'pi pi-fw pi-user',
-          routerLink: '/ct-home'
-        },
+      this.GESItems = [
         {
           label: 'Artikel hinzufügen',
           icon: 'pi pi-fw pi-file',
@@ -45,26 +41,6 @@ export class AppComponent {
           routerLink: '/articles',
         },
         {
-          label: 'Standort hinzufügen',
-          icon: 'pi pi-map-marker',
-          routerLink: '/add-location'
-        },
-        {
-          label: 'Alle Standorte anzeigen',
-          icon: 'pi pi-fw pi-map',
-          routerLink: '/locations'
-        },
-        {
-          label: 'Linie hinzufügen',
-          icon: 'pi pi-fw pi-file',
-          routerLink: '/add-lines'
-        },
-        {
-          label: 'Alle Linien anzeigen',
-          icon: 'pi pi-fw pi-map',
-          routerLink: '/lines'
-        },
-        {
           label: 'Rolle wechseln',
           icon: 'pi pi-fw pi-power-off',
           routerLink: '/login'
@@ -73,9 +49,36 @@ export class AppComponent {
 
     this.BHItems = [
       {
-        label: 'Add Person',
+        label: 'Standort hinzufügen',
+        icon: 'pi pi-map-marker',
+        routerLink: '/add-location'
+      },
+      {
+        label: 'Alle Standorte anzeigen',
+        icon: 'pi pi-fw pi-map',
+        routerLink: '/locations'
+      },
+      {
+        label: 'Linie hinzufügen',
         icon: 'pi pi-fw pi-file',
-        routerLink: '/add',
+        routerLink: '/add-lines'
+      },
+      {
+        label: 'Alle Linien anzeigen',
+        icon: 'pi pi-fw pi-map',
+        routerLink: '/lines'
+      },
+      {
+        label: 'Log out',
+        icon: 'pi pi-fw pi-power-off',
+        routerLink: '/login'
+      }
+    ];
+    this.LRItems = [
+      {
+        label: 'Dashboard',
+        icon: 'pi pi-chart-bar',
+        routerLink: '/dashboard'
       },
       {
         label: 'Log out',

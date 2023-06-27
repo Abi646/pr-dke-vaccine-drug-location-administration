@@ -1,37 +1,64 @@
-<h1>Line erstellen und zuweisen</h1>
+<h2>Linie hinzufügen</h2>
 
-<form [formGroup]="lineForm" (ngSubmit)="addLine()">
+<form [formGroup]="lineForm" (ngSubmit)="addLine()" class="p-fluid grid">
   <div class="field col-12 md-4">
     <span class="p-float-label p-input-icon-left">
-      <i class="pi pi-map-marker"></i>
+      <i class="pi pi-tag"></i>
       <input type="number" id="lineNumber" pInputText formControlName="lineNumber" required>
       <label for="lineNumber">Liniennummer</label>
     </span>
-  </div>
-  <div>
-    <label>Type:</label>
-    <input type="text" formControlName="type" required>
-  </div>
-  <div>
-    <label>Location:</label>
-    <select formControlName="locationId" required>
-      <option value="">Select a location</option>
-      <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
-    </select>
-  </div>
-  <div>
-    <label>Article:</label>
-    <select formControlName="articleId" required>
-      <option value="">Select an article</option>
-      <option *ngFor="let article of articles" [value]="article.id">{{ article.name }}</option>
-    </select>
-  </div>
-  <div>
-    <label>Quantity:</label>
-    <input type="number" formControlName="quantity" required>
+    <div class="invalid-feedback" *ngIf="lineForm.get('lineNumber')?.invalid && lineForm.get('lineNumber')?.touched">
+      Liniennummer ist erforderlich.
+    </div>
   </div>
 
-  <div>
-    <button type="submit">Add Line</button>
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map"></i>
+      <p-dropdown id="type" [options]="typeOptions" formControlName="type" placeholder="Standorttyp"></p-dropdown>
+      <label for="type">Typ</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="lineForm.get('type')?.invalid && lineForm.get('type')?.touched">
+      Typ ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-map"></i>
+      <p-dropdown id="location" [options]="locations" formControlName="location" placeholder="Location" optionLabel="name"></p-dropdown>
+      <label for="location">Location</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="lineForm.get('location')?.invalid && lineForm.get('location')?.touched">
+      Standort ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <p-dropdown id="article" [options]="articles" formControlName="article" placeholder="Article" optionLabel="name"></p-dropdown>
+      <label for="article">Article</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="lineForm.get('article')?.invalid && lineForm.get('article')?.touched">
+      Artikel ist erforderlich.
+    </div>
+  </div>
+
+  <div class="field col-12 md-4">
+    <span class="p-float-label p-input-icon-left">
+      <i class="pi pi-tag"></i>
+      <input type="number" id="quantity" pInputText formControlName="quantity" required>
+      <label for="quantity">Kontingent</label>
+    </span>
+    <div class="invalid-feedback" *ngIf="lineForm.get('quantity')?.invalid && lineForm.get('quantity')?.touched">
+      Kontingent ist erforderlich.
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button pButton type="submit" label="Speichern" class="blue-success" [disabled]="!isFormValid()"></button>
   </div>
 </form>
+
+<p-toast></p-toast>

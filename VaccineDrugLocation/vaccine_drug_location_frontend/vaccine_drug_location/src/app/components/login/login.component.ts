@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
-import {AuthService, Role} from "../../services/auth.service";
-import {Router} from "@angular/router";
-import {StateService} from "../../services/state.service";
+import { Component } from '@angular/core';
+import { AuthService, Role } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,33 +8,20 @@ import {StateService} from "../../services/state.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
-  public states: string[] = [];
-  public counties: string[] = [];
-
-  public selectedState: string = '';
-  public selectedCounty: string = '';
-
-  constructor(private router: Router, private stateService: StateService, private authService: AuthService) {
-  }
-
-  changeCounties(event: any) {
-    this.counties = this.stateService.getCountiesByState(event.value);
-  }
-
-  ngOnInit() {
-    this.states = this.stateService.getAllStates();
-    this.counties = this.stateService.getCountiesByState(this.states[0]);
-  }
+  constructor(private router: Router, private authService: AuthService) {}
 
   selectRole(role: Role) {
     this.authService.setRole(role);
 
-    if (this.authService.getRole() === "CT") {
-      this.router.navigate(['ct-home']);
-    } else if (this.authService.getRole() === "BH") {
-      this.router.navigate([`bh-home/${this.selectedState}/${this.selectedCounty}`]);
-    }
+    // Use a small delay before navigation to ensure the AppComponent is updated.
+    setTimeout(() => {
+      if (role === 'GES') {
+        this.router.navigate(['articles']);
+      } else if (role === 'BH') {
+        this.router.navigate(['locations']);
+      } else if (role === 'LR') {
+        this.router.navigate(['dashboard']);
+      }
+    }, 100);
   }
-
 }
