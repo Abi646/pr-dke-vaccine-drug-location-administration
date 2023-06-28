@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     List<Article> findByNameContainingIgnoreCase(String name);
-
     List<Article> findByTypeContainingIgnoreCase(String type);
 }

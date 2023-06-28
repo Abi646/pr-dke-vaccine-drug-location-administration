@@ -36,7 +36,7 @@ export class AppComponent {
           routerLink: '/add-article',
         },
         {
-          label: 'Alle Artikel',
+          label: 'Alle Artikel anzeigen',
           icon: 'pi pi-list',
           routerLink: '/articles',
         },
@@ -69,7 +69,7 @@ export class AppComponent {
         routerLink: '/lines'
       },
       {
-        label: 'Log out',
+        label: 'Rolle wechseln',
         icon: 'pi pi-fw pi-power-off',
         routerLink: '/login'
       }
@@ -81,11 +81,25 @@ export class AppComponent {
         routerLink: '/dashboard'
       },
       {
-        label: 'Log out',
+        label: 'Alle Artikel anzeigen',
+        icon: 'pi pi-list',
+        routerLink: '/articles',
+      },
+      {
+        label: 'Alle Standorte anzeigen',
+        icon: 'pi pi-fw pi-map',
+        routerLink: '/locations'
+      },
+      {
+        label: 'Alle Linien anzeigen',
+        icon: 'pi pi-fw pi-map',
+        routerLink: '/lines'
+      },
+      {
+        label: 'Rolle wechseln',
         icon: 'pi pi-fw pi-power-off',
         routerLink: '/login'
-      }
+      },
     ];
     }
-
 }

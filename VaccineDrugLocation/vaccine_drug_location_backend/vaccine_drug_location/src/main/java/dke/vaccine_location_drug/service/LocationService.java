@@ -22,13 +22,15 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
+    // Erstellt einen Standort und speichert ihn in der Datenbank
     public Location createLocation(Location location) {
         return locationRepository.save(location);
     }
 
+    // Aktualisiert einen Standort mit den übergebenen Daten
     public Location updateLocation(Long locationId, Location updatedLocation) {
         Location existingLocation = locationRepository.findById(locationId)
-                .orElseThrow(() -> new IllegalArgumentException("Location not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Standort wurde nicht gefunden"));
 
         existingLocation.setName(updatedLocation.getName());
         existingLocation.setCounty(updatedLocation.getCounty());
@@ -38,23 +40,28 @@ public class LocationService {
         return locationRepository.save(existingLocation);
     }
 
-
+    // Löscht einen Standort anhand der ID
     public void deleteLocation(Long locationId) {
         locationRepository.deleteById(locationId);
     }
 
+    // Ruft alle Standorte ab
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
     }
 
+    // Ruft einen Standort anhand der ID ab
     public Location getLocationById(long id) {
         return locationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Standort mit der ID: " + id + "wurde nicht gefunden"));
     }
+
+    // Sucht Standorte anhand des Landkreises
     public List<Location> searchLocationsByCounty(String county) {
         return locationRepository.findByCountyIgnoreCase(county);
     }
 
+    // Sucht Standorte mit einer Menge größer als 0 für einen bestimmten Landkreis und gibt nur die Namen zurück
     public List<String> searchLocationsWithQuantity(String county) {
         List<Location> locations = locationRepository.findByCountyAndLinesQuantityGreaterThan(county, 0);
         return locations.stream()
@@ -62,11 +69,11 @@ public class LocationService {
                 .collect(Collectors.toList());
     }
 
-
+    // Ruft die Zeilennummern von Warteschlangen ab, die eine Menge größer als 0 haben, für einen bestimmten Standortnamen
     public List<Integer> getLinesWithQuantityByLocationName(String locationName) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
-            throw new IllegalArgumentException("Location not found");
+            throw new IllegalArgumentException("Standort wurde nicht gefunden");
         }
 
         return location.getLines().stream()
@@ -75,33 +82,31 @@ public class LocationService {
                 .collect(Collectors.toList());
     }
 
-
+    // Ruft die Menge eines Artikels anhand des Standortnamens, der Zeilennummer und des Artikelnamens ab
     public int getArticleQuantityByLocationAndLineNumberAndName(String locationName, int lineNumber, String articleName) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
-            throw new IllegalArgumentException("Location not found");
+            throw new IllegalArgumentException("Standort wurde nicht gefunden");
         }
 
         Line line = location.getLines().stream()
                 .filter(l -> l.getLineNumber() == lineNumber)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Line not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Linie wurde nicht gefunden"));
 
         Article article = line.getArticle();
         if (article == null || !article.getName().equalsIgnoreCase(articleName)) {
-            throw new IllegalArgumentException("Article not found");
+            throw new IllegalArgumentException("Artikel wurde nicht gefunden");
         }
 
         return line.getQuantity();
     }
 
-
-
-
+    // Ruft die Artikelnamen ab, die einer bestimmten Zeilennummer eines Standorts zugeordnet sind
     public List<String> getArticleNamesByLocationAndLineNumber(String locationName, int lineNumber) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
-            throw new IllegalArgumentException("Location not found");
+            throw new IllegalArgumentException("Standort wurde nicht gefunden");
         }
 
         List<Line> lines = location.getLines();
@@ -115,7 +120,7 @@ public class LocationService {
         }
 
         if (targetLine == null) {
-            throw new IllegalArgumentException("Line not found");
+            throw new IllegalArgumentException("Linie wurde nicht gefunden");
         }
 
         List<String> articleNames = new ArrayList<>();
@@ -129,17 +134,13 @@ public class LocationService {
         return articleNames;
     }
 
-
-
+    // Ruft die Dauer eines Termins anhand des Standortnamens ab
     public int getAppointmentDurationByLocationName(String locationName) {
         Location location = locationRepository.findByName(locationName);
         if (location == null) {
-            throw new IllegalArgumentException("Location not found");
+            throw new IllegalArgumentException("Standort wurde nicht gefunden");
         }
 
         return location.getDuration();
     }
-
-
-
 }

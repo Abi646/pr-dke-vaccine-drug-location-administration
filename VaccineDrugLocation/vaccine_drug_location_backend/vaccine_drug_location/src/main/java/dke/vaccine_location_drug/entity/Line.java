@@ -73,5 +73,4 @@ public class Line {
         this.location = location;
     }
 
-    // Weitere Methoden und Annotationen nach Bedarf
 }

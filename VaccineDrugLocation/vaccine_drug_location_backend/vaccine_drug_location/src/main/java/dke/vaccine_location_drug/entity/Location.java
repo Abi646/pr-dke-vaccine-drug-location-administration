@@ -9,12 +9,10 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long location_id;
-
     private String name;
     private String county;
     private String address;
     private String type;
-
     private int duration;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
@@ -75,5 +73,4 @@ public class Location {
         this.duration = duration;
     }
 
-    // Weitere Methoden und Annotationen nach Bedarf
 }

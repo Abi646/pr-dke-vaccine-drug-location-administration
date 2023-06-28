@@ -64,4 +64,9 @@ public class ArticleController {
         Article article = articleService.addArticleToLine(articleId, lineId);
         return ResponseEntity.ok(article);
     }
+    @GetMapping("/{id}/stock")
+    public ResponseEntity<Integer> getArticleStock(@PathVariable Long id) {
+        int stock = articleService.getArticleStock(id);
+        return ResponseEntity.ok(stock);
+    }
 }

@@ -15,7 +15,7 @@
   <div class="field col-12 md-4">
     <span class="p-float-label p-input-icon-left">
       <i class="pi pi-map"></i>
-      <p-dropdown id="type" [options]="typeOptions" formControlName="type" placeholder="Standorttyp"></p-dropdown>
+      <p-dropdown id="type" [options]="typeOptions" formControlName="type" placeholder="Typ"></p-dropdown>
       <label for="type">Typ</label>
     </span>
     <div class="invalid-feedback" *ngIf="lineForm.get('type')?.invalid && lineForm.get('type')?.touched">

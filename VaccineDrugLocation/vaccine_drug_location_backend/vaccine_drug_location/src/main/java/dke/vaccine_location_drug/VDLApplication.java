@@ -121,7 +121,7 @@ public class VDLApplication {
 			lineRepository.save(line2);
 
 			Line line3 = new Line();
-			line3.setLineNumber(1);
+			line3.setLineNumber(3);
 			line3.setType("drug");
 			line3.setArticle(article5);
 			line3.setQuantity(20);
@@ -129,7 +129,7 @@ public class VDLApplication {
 			lineRepository.save(line3);
 
 			Line line4 = new Line();
-			line4.setLineNumber(2);
+			line4.setLineNumber(4);
 			line4.setType("drug");
 			line4.setArticle(article6);
 			line4.setQuantity(15);
@@ -153,7 +153,7 @@ public class VDLApplication {
 			locationRepository.save(location4);
 
 			Line line5 = new Line();
-			line5.setLineNumber(1);
+			line5.setLineNumber(5);
 			line5.setType("vaccine");
 			line5.setArticle(article3);
 			line5.setQuantity(10);
@@ -161,7 +161,7 @@ public class VDLApplication {
 			lineRepository.save(line5);
 
 			Line line6 = new Line();
-			line6.setLineNumber(2);
+			line6.setLineNumber(6);
 			line6.setType("vaccine");
 			line6.setArticle(article4);
 			line6.setQuantity(9);
@@ -169,7 +169,7 @@ public class VDLApplication {
 			lineRepository.save(line6);
 
 			Line line7 = new Line();
-			line7.setLineNumber(1);
+			line7.setLineNumber(7);
 			line7.setType("drug");
 			line7.setArticle(article5);
 			line7.setQuantity(5);
@@ -177,7 +177,7 @@ public class VDLApplication {
 			lineRepository.save(line7);
 
 			Line line8 = new Line();
-			line8.setLineNumber(2);
+			line8.setLineNumber(8);
 			line8.setType("drug");
 			line8.setArticle(article7);
 			line8.setQuantity(17);
@@ -201,7 +201,7 @@ public class VDLApplication {
 			locationRepository.save(location6);
 
 			Line line9 = new Line();
-			line9.setLineNumber(10);
+			line9.setLineNumber(9);
 			line9.setType("vaccine");
 			line9.setArticle(article1);
 			line9.setQuantity(65);
@@ -209,7 +209,7 @@ public class VDLApplication {
 			lineRepository.save(line9);
 
 			Line line10 = new Line();
-			line10.setLineNumber(20);
+			line10.setLineNumber(10);
 			line10.setType("vaccine");
 			line10.setArticle(article2);
 			line10.setQuantity(50);
@@ -225,7 +225,7 @@ public class VDLApplication {
 			lineRepository.save(line11);
 
 			Line line12 = new Line();
-			line12.setLineNumber(22);
+			line12.setLineNumber(12);
 			line12.setType("drug");
 			line12.setArticle(article7);
 			line12.setQuantity(30);

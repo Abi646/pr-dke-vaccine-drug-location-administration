@@ -6,7 +6,7 @@ import { Location } from '../../../entities/Location';
 import { LineService } from '../../../services/line.service';
 import { ArticleService } from '../../../services/article.service';
 import { LocationService } from '../../../services/location.service';
-import {MessageService} from "primeng/api";
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-line',
@@ -46,7 +46,7 @@ export class AddLineComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Initialize the form and load data
+    // Initialisiert das Formular mit den Validatoren
     this.lineForm = this.formBuilder.group({
       lineNumber: [null, Validators.required],
       type: ['', Validators.required],
@@ -55,28 +55,47 @@ export class AddLineComponent implements OnInit {
       quantity: [null, Validators.required]
     });
 
+    // Lädt Standorte und Artikel beim Initialisieren der Komponente
     this.loadLocations();
     this.loadArticles();
   }
 
+  // Lädt alle Standorte
   loadLocations() {
     this.locationService.getAllLocations().subscribe((locations) => {
       this.locations = locations;
     });
   }
 
+  // Lädt alle Artikel
   loadArticles() {
     this.articleService.getAllArticles().subscribe((articles) => {
       this.articles = articles;
     });
   }
 
+  // Fügt eine neue Warteschlange hinzu
   addLine(): void {
     if (this.lineForm.invalid) {
+      // Markiert alle Felder als "berührt", um die Validierungsmeldungen anzuzeigen
       this.lineForm.markAllAsTouched();
       return;
     }
 
+    const selectedArticle: Article = this.lineForm.value.article;
+    const selectedQuantity: number = this.lineForm.value.quantity;
+
+    // Überprüft, ob die ausgewählte Menge das verfügbare Kontingent des Artikels überschreitet
+    if (selectedArticle && selectedQuantity > selectedArticle.stock) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Die ausgewählte Menge überschreitet das verfügbare Kontingent des Artikels!'
+      });
+      return;
+    }
+
+    // Erstellt ein neues Line-Objekt mit den Formularwerten
     const newLine: Line = {
       lineNumber: this.lineForm.value.lineNumber,
       type: this.lineForm.value.type,
@@ -85,15 +104,18 @@ export class AddLineComponent implements OnInit {
       quantity: this.lineForm.value.quantity
     };
 
+    // Fügt die neue Linie hinzu
     this.lineService.createLine(newLine).subscribe(() => {
       this.messageService.add({
         severity: 'success',
-        summary: 'Success',
+        summary: 'Erfolgreich',
         detail: 'Linie wurde erfolgreich hinzugefügt!'
       });
       this.lineForm.reset();
     });
   }
+
+  // Überprüft, ob das Formular gültig ist
   isFormValid(): boolean {
     return this.lineForm.valid;
   }

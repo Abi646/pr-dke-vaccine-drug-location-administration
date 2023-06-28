@@ -1,13 +1,8 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
-import {
-  MedicationAppointmentComponent
-} from './components/bh-employee/medication-appointment/medication-appointment.component';
-import {BhDashboardComponent} from './components/bh-employee/bh-dashboard/bh-dashboard.component';
 import {AuthService} from "./services/auth.service";
 import {HttpClientModule} from "@angular/common/http";
 import {ButtonModule} from 'primeng/button';
@@ -45,8 +40,6 @@ import { EditLineComponent } from './components/bh-employee/edit-line/edit-line.
   declarations: [
     AppComponent,
     LoginComponent,
-    MedicationAppointmentComponent,
-    BhDashboardComponent,
     AddArticleComponent,
     ListAllArticlesComponent,
     EditArticleComponent,

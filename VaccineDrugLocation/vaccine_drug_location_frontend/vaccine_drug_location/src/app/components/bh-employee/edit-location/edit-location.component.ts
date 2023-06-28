@@ -73,7 +73,7 @@ export class EditLocationComponent implements OnInit {
       this.locationService.updateLocation(this.location.id, updatedLocation).subscribe(
         () => {
           this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Artikel wurde erfolgreich bearbeitet.' });
-          this.router.navigate(['/articles']);
+          this.router.navigate(['/locations']);
         },
         (error: any) => {
           console.log(error);

@@ -34,7 +34,7 @@
     <td>{{ location.county }}</td>
     <td>{{ location.address }}</td>
     <td>{{ location.type }}</td>
-    <td>{{ location.duration }}</td>
+    <td>{{ location.duration }} Minuten </td>
     <td>
       <button (click)="editLocation(location)" pButton class="p-button p-button-primary">Bearbeiten</button>
       <button *ngIf="location.id" (click)="deleteLocation(location.id)" pButton class="p-button p-button-danger">Löschen</button>
